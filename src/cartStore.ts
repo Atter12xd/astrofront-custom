@@ -69,6 +69,16 @@ export function updateCartItemQuantity(itemId: string, quantity: number) {
   Cookies.set("cart", JSON.stringify(currentCart)); // Actualiza las cookies
 }
 
+// Función para refrescar el estado del carrito (se usa en otras partes del proyecto)
+export function refreshCartState() {
+  const storedCart = Cookies.get("cart");
+  if (storedCart) {
+    cart.set(JSON.parse(storedCart)); // Recarga el carrito desde las cookies
+  } else {
+    cart.set([]); // Si no hay datos en las cookies, deja el carrito vacío
+  }
+}
+
 // Cargar el carrito desde las cookies al inicializar
 export function initializeCart() {
   const storedCart = Cookies.get("cart");
