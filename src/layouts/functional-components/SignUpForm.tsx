@@ -29,14 +29,13 @@ const SignUpForm = () => {
 
     try {
       setLoading(true);
-      const form = new FormData();
-      form.append("firstName", formData.firstName || "");
-      form.append("email", formData.email);
-      form.append("password", formData.password);
 
       const response = await fetch("/api/sign-up", {
         method: "POST",
-        body: form, // Use FormData
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData), // Cambiado de FormData a JSON
       });
 
       const contentType = response.headers.get("content-type");
@@ -125,6 +124,7 @@ const SignUpForm = () => {
               <button
                 type="submit"
                 className="btn btn-primary md:text-lg md:font-medium w-full mt-10"
+                disabled={loading} // Deshabilitar el botón mientras se procesa
               >
                 {loading ? (
                   <BiLoaderAlt className="animate-spin mx-auto" size={26} />

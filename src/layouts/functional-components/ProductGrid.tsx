@@ -10,7 +10,7 @@ const ProductGrid = ({
   initialPageInfo,
   sortKey,
   reverse,
-  searchValue
+  searchValue,
 }: {
   initialProducts: Product[];
   initialPageInfo: PageInfo;
@@ -25,7 +25,7 @@ const ProductGrid = ({
   const [currentSortKey, setCurrentSortKey] = useState(sortKey);
   const [currentReverse, setCurrentReverse] = useState(reverse);
   const [sortChanged, setSortChanged] = useState(false);
-  const loaderRef = useRef(null);
+  const loaderRef = useRef<HTMLDivElement | null>(null);
 
   const getSortParams = (sortKey: string) => {
     const sortOption = sorting.find((item) => item.slug === sortKey) || defaultSort;
@@ -54,6 +54,8 @@ const ProductGrid = ({
   };
 
   const updateStateFromURL = () => {
+    if (typeof window === "undefined") return;
+
     const params = new URLSearchParams(window.location.search);
     const newSortKey = params.get("sortKey") || sortKey;
 
@@ -70,13 +72,15 @@ const ProductGrid = ({
   };
 
   useEffect(() => {
-    // Listen for URL changes and handle state updates
-    window.addEventListener("popstate", updateStateFromURL);
+    if (typeof window !== "undefined") {
+      // Listen for URL changes and handle state updates
+      window.addEventListener("popstate", updateStateFromURL);
 
-    // Cleanup event listener on component unmount
-    return () => {
-      window.removeEventListener("popstate", updateStateFromURL);
-    };
+      // Cleanup event listener on component unmount
+      return () => {
+        window.removeEventListener("popstate", updateStateFromURL);
+      };
+    }
   }, [initialPageInfo]);
 
   // Intersection observer to trigger loading more products
@@ -110,7 +114,6 @@ const ProductGrid = ({
   return (
     <div>
       <div className="row mx-auto">
-
         {searchValue ? (
           <p className="mb-4">
             {products.length === 0
@@ -119,7 +122,6 @@ const ProductGrid = ({
             <span className="font-bold">&quot;{searchValue}&quot;</span>
           </p>
         ) : null}
-
 
         {products?.length === 0 && (
           <div className="mx-auto pt-5 text-center">
@@ -182,7 +184,7 @@ const ProductGrid = ({
                     {product?.priceRange?.minVariantPrice?.currencyCode}
                   </span>
                   {parseFloat(
-                    product?.compareAtPriceRange?.maxVariantPrice?.amount,
+                    product?.compareAtPriceRange?.maxVariantPrice?.amount
                   ) > 0 ? (
                     <s className="text-light dark:text-darkmode-light text-xs md:text-base font-medium">
                       {currencySymbol}{" "}
@@ -198,7 +200,7 @@ const ProductGrid = ({
                 </div>
               </div>
             </div>
-          )
+          );
         })}
       </div>
       {pageInfo?.hasNextPage && (

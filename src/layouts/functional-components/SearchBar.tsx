@@ -1,35 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoSearch, IoClose } from "react-icons/io5";
 
 const SearchBar = () => {
   const [isInputEditing, setInputEditing] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const searchParams = new URLSearchParams(window.location.search);
     const query = searchParams.get("q");
+
     if (query) {
       setInputValue(query);
       setInputEditing(true);
     }
 
-    const inputField = document.getElementById("searchInput") as HTMLInputElement;
-    if (isInputEditing || query) {
-      inputField.focus();
+    if (inputRef.current && (isInputEditing || query)) {
+      inputRef.current.focus();
     }
   }, [isInputEditing]);
 
   const updateURL = (query: string) => {
-    const newURL = query ? `/products?q=${encodeURIComponent(query)}` : '/products';
-    // window.history.pushState({}, '', newURL);
-    window.location.href = newURL.toString();
+    if (typeof window === "undefined") return;
+
+    const newURL = query
+      ? `/products?q=${encodeURIComponent(query)}`
+      : "/products";
+    window.location.href = newURL;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputEditing(true);
-    setInputValue(e.target.value);
+    const value = e.target.value;
+    setInputValue(value);
 
-    updateURL(e.target.value);
+    if (value.trim() !== "") {
+      setInputEditing(true);
+    } else {
+      setInputEditing(false);
+    }
+
+    updateURL(value);
   };
 
   const handleClear = () => {
@@ -40,20 +52,22 @@ const SearchBar = () => {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const searchInput = form.search as HTMLInputElement;
-    updateURL(searchInput.value);
+    updateURL(inputValue);
   };
 
   return (
-    <form onSubmit={onSubmit} className="border border-border dark:border-darkmode-border rounded-full flex bg-light/10 pl-4 relative">
+    <form
+      onSubmit={onSubmit}
+      className="border border-border dark:border-darkmode-border rounded-full flex bg-light/10 pl-4 relative"
+    >
       <input
         type="text"
         name="search"
-        placeholder="Search for products"
+        placeholder=""
         autoComplete="off"
         value={inputValue}
         onChange={handleChange}
+        ref={inputRef}
         id="searchInput"
         className="bg-transparent border-none search-input focus:ring-transparent p-2 w-full"
       />
@@ -63,11 +77,16 @@ const SearchBar = () => {
             type="button"
             onClick={handleClear}
             className="p-2 m-1 rounded-full"
+            aria-label="Clear search"
           >
             <IoClose className="h-4 w-4" />
           </button>
         )}
-        <button type="submit" className="search-icon p-2 m-1 rounded-full">
+        <button
+          type="submit"
+          className="search-icon p-2 m-1 rounded-full"
+          aria-label="Submit search"
+        >
           <IoSearch className="h-5 w-5" />
         </button>
       </div>

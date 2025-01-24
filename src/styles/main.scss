@@ -11,32 +11,51 @@
   @include meta.load-css("components");
   @include meta.load-css("navigation");
   @include meta.load-css("buttons");
+
+  /* Swiper-specific styles */
+  .swiper-pagination {
+    @apply mt-4 flex items-center justify-center space-x-2 text-center;
+  }
+
+  .swiper-pagination-bullet {
+    @apply h-3 w-3 bg-gray-300 rounded-full;
+    opacity: 0.6; /* Válido */
+    transition: all 0.3s ease-in-out;
+  }
+
+  .swiper-pagination-bullet-active {
+    @apply bg-blue-500 opacity-100 scale-125; /* Clase válida */
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    @apply bg-gray-100 rounded-full shadow-md;
+  }
+
+  .swiper-button-disabled {
+    @apply opacity-50;
+  }
 }
 
 @layer utilities {
   @include meta.load-css("utilities");
-}
 
-.iiz__hint {
-  @apply rounded-md;
-}
+  /* Autofill-related utilities */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #f2f2f2 inset !important;
+  }
 
-/* change input autofield color */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px #f2f2f2 inset !important;
-}
+  .dark input:-webkit-autofill,
+  .dark input:-webkit-autofill:hover,
+  .dark input:-webkit-autofill:focus,
+  .dark input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px rgba(0, 0, 0, 0.9) inset !important;
+  }
 
-.dark input:-webkit-autofill,
-.dark input:-webkit-autofill:hover,
-.dark input:-webkit-autofill:focus,
-.dark input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px rgba(0, 0, 0, 0.9) inset !important;
-}
-
-/*Change text in autofill textbox*/
-.dark input:-webkit-autofill {
-  -webkit-text-fill-color: #ddd !important;
+  .dark input:-webkit-autofill {
+    -webkit-text-fill-color: #ddd !important;
+  }
 }

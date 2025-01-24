@@ -74,6 +74,9 @@ module.exports = {
         primary: ["var(--font-primary)", fontPrimaryType],
         secondary: ["var(--font-secondary)", fontSecondaryType],
       },
+      opacity: {
+        1: "0.01", // Agrega soporte para `opacity-1`
+      },
     },
   },
   plugins: [

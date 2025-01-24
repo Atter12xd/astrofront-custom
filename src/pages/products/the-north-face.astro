@@ -1,0 +1,60 @@
+---
+import Base from "@/layouts/Base.astro";
+import CallToAction from "@/partials/CallToAction.astro";
+import ProductCard from "./ProductCard"; // Asegúrate de que esta ruta sea correcta
+
+// Simulando los datos dinámicos de los productos de "THE NORTH FACE"
+const products = [
+  {
+    id: "1",
+    title: "Polo North Face Extreme",
+    description: "Polo North Face Extreme de la mayor calidad.",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/THE_NORT_FACE1.avif",
+      "/images/THE_NORT_FACE3.avif",
+      
+    ],
+  },
+  {
+    id: "2",
+    title: "Polo North Face ",
+    description: "Polo North Face de la mejor calidad.",
+    price: "S/ 49.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#000000", "#808080"], // Negro, Gris
+    images: [
+      "/images/theNorthFace10.jpg",
+      "/images/theNorthFace11.jpg",
+      "/images/theNorthFace12.jpg",
+    ],
+  },
+  {
+    id: "3",
+    title: "Polo North Face DP",
+    description: "Polo North Face DP de la mejor calidad.",
+    price: "S/ 49.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#000000", "#808080"], // Negro, Gris
+    images: [
+      "/images/THE_NORT_FACE5.webp",
+      "/images/THE_NORT_FACE6.webp",
+      
+    ],
+  },
+];
+---
+
+<Base title="The North Face">
+  <section class="py-10">
+    <div class="container grid grid-cols-1 gap-10">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} client:load />
+      ))}
+    </div>
+  </section>
+
+  <CallToAction />
+</Base>

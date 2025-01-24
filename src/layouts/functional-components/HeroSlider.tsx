@@ -33,12 +33,12 @@ const HeroSlider = ({ products }: { products: Product[] }) => {
                       {item.title}
                     </h1>
                   </div>
-                  {item.handle && (
+                  {item.link && ( // Verifica si existe la propiedad `link`
                     <a
                       className="btn btn-sm md:btn-lg btn-primary font-medium"
-                      href={`products/${item.handle}`}
+                      href={item.link} // Usa la propiedad `link`
                     >
-                      Shop Now
+                      VER MAS
                     </a>
                   )}
                 </div>
@@ -47,12 +47,12 @@ const HeroSlider = ({ products }: { products: Product[] }) => {
               <div className="sm:col-12 lg:col-6">
                 {item.featuredImage && (
                   <img
-                    src={item.featuredImage.url}
-                    className="mx-auto w-[388px] lg:w-full"
-                    width={"507"}
-                    height={"385"}
-                    alt="banner image"
-                  />
+                  src={item.featuredImage.url}
+                  className="mx-auto w-[300px] h-[22px] lg:w-[400px] lg:h-[500px] object-cover rounded-lg"
+                  width={400}
+                  height={250}
+                  alt="banner image"
+                />
                 )}
               </div>
             </div>
@@ -62,5 +62,4 @@ const HeroSlider = ({ products }: { products: Product[] }) => {
     </>
   );
 };
-
 export default HeroSlider;

@@ -9,50 +9,72 @@
       "url": "/products"
     },
     {
-      "name": "Pages",
+      "name": "Hombre",
       "url": "",
       "hasChildren": true,
       "children": [
         {
-          "name": "About",
-          "url": "/about"
+          "name": "Ver todo",
+          "url": "/products/hombre"
         },
         {
-          "name": "Contact",
-          "url": "/contact"
+          "name": "Polos",
+          "url": "/products/hombre/polos"
         },
         {
-          "name": "404 Page",
-          "url": "/404"
+          "name": "Pantalones",
+          "url": "/products/hombre/pantalones"
         }
       ]
     },
     {
-      "name": "Contact",
+      "name": "Mujer",
+      "url": "",
+      "hasChildren": true,
+      "children": [
+        {
+          "name": "Ver todo",
+          "url": "/products/mujer"
+        },
+       
+        {
+          "name": "Polos",
+          "url": "/products/mujer/polos"
+        },
+        {
+          "name": "Pantalones",
+          "url": "/products/mujer/pantalones"
+        }
+      ]
+    },
+   
+    
+    {
+      "name": "Contacto",
       "url": "/contact"
     }
   ],
   "footer": [
     {
-      "name": "About",
+      "name": "Nosotros",
       "url": "/about"
     },
     {
-      "name": "Products",
-      "url": "/products"
+      "name": "Ir a productos",
+      "url": "/"
     },
     {
-      "name": "Contact",
+      "name": "Contacto",
       "url": "/contact"
     }
   ],
   "footerCopyright": [
     {
-      "name": "Privacy & Policy",
+      "name": "Política de privacidad",
       "url": "/privacy-policy"
     },
     {
-      "name": "Terms of Service",
+      "name": "Términos y Condiciones",
       "url": "/terms-services"
     }
   ]

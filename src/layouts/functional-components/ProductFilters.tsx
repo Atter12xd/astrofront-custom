@@ -1,6 +1,6 @@
 import type { ShopifyCollection } from "@/lib/shopify/types";
 import { slugify } from "@/lib/utils/textConverter";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BsCheckLg } from "react-icons/bs";
 import ShowTags from "./product/ShowTags";
 import RangeSlider from "./rangeSlider/RangeSlider";
@@ -20,17 +20,25 @@ const ProductFilters = ({
   vendorsWithCounts: { vendor: string; productCount: number }[];
   categoriesWithCounts: { category: string; productCount: number }[];
 }) => {
-  const [searchParams, setSearchParams] = useState(
-    new URLSearchParams(window.location.search)
-  );
+  const [searchParams, setSearchParams] = useState<URLSearchParams | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setSearchParams(new URLSearchParams(window.location.search));
+    }
+  }, []);
+
+  if (!searchParams) {
+    return <div>Cargando filtros...</div>; // Renderiza algo mientras los datos se inicializan
+  }
 
   const selectedBrands = searchParams.getAll("b");
   const selectedCategory = searchParams.get("c");
 
   const updateSearchParams = (newParams: URLSearchParams) => {
     const newUrl = `${window.location.pathname}?${newParams.toString()}`;
-    window.location.href = newUrl.toString();
-    setSearchParams(newParams);
+    window.history.pushState({}, "", newUrl);
+    setSearchParams(new URLSearchParams(newUrl));
   };
 
   const handleBrandClick = (name: string) => {
@@ -40,7 +48,7 @@ const ProductFilters = ({
     const currentBrands = newParams.getAll("b");
 
     if (currentBrands.includes(slugName)) {
-      newParams.delete("b", slugName);
+      newParams.delete("b");
     } else {
       newParams.append("b", slugName);
     }
@@ -75,25 +83,21 @@ const ProductFilters = ({
           {categories.map((category) => (
             <li
               key={category.handle}
-              className={`flex items-center justify-between cursor-pointer ${selectedCategory === category.handle
-                ? "text-dark dark:text-darkmode-dark font-semibold"
-                : "text-light dark:text-darkmode-light"
-                }`}
+              className={`flex items-center justify-between cursor-pointer ${
+                selectedCategory === category.handle
+                  ? "text-dark dark:text-darkmode-dark font-semibold"
+                  : "text-light dark:text-darkmode-light"
+              }`}
               onClick={() => handleCategoryClick(category.handle)}
             >
               {category.title}
-              {searchParams.has("c") && !searchParams.has("b") ? (
-                <span>({category?.products?.edges.length || 0})</span>
-              ) : (
-                <span>
-                  {categoriesWithCounts.length > 0
-                    ? `(${categoriesWithCounts.find(
+              <span>
+                {categoriesWithCounts.length > 0
+                  ? `(${categoriesWithCounts.find(
                       (c) => c.category === category.title
-                    )?.productCount || 0
-                    })`
-                    : `(${category?.products?.edges.length || 0})`}
-                </span>
-              )}
+                    )?.productCount || 0})`
+                  : `(${category?.products?.edges.length || 0})`}
+              </span>
             </li>
           ))}
         </ul>
@@ -110,25 +114,13 @@ const ProductFilters = ({
                 className={`flex items-center justify-between cursor-pointer text-light dark:text-darkmode-light`}
                 onClick={() => handleBrandClick(vendor.vendor)}
               >
-                {searchParams.has("b") &&
-                  !searchParams.has("c") &&
-                  !searchParams.has("minPrice") &&
-                  !searchParams.has("maxPrice") &&
-                  !searchParams.has("q") &&
-                  !searchParams.has("t") ? (
-                  <span>
-                    {vendor.vendor} ({vendor.productCount})
-                  </span>
-                ) : (
-                  <span>
-                    {vendorsWithCounts.length > 0
-                      ? `${vendor.vendor} (${vendorsWithCounts.find(
+                <span>
+                  {vendorsWithCounts.length > 0
+                    ? `${vendor.vendor} (${vendorsWithCounts.find(
                         (v) => v.vendor === vendor.vendor
-                      )?.productCount || 0
-                      })`
-                      : `${vendor.vendor} (${vendor.productCount})`}
-                  </span>
-                )}
+                      )?.productCount || 0})`
+                    : `${vendor.vendor} (${vendor.productCount})`}
+                </span>
                 <div className="h-4 w-4 rounded-sm flex items-center justify-center border border-light dark:border-darkmode-light">
                   {selectedBrands.includes(slugify(vendor.vendor.toLowerCase())) && (
                     <BsCheckLg size={16} />

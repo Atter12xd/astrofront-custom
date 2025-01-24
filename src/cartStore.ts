@@ -1,74 +1,78 @@
 import { atom, computed } from "nanostores";
 import Cookies from "js-cookie";
-import { getCart } from "@/lib/shopify";
-import {
-  addItem,
-  removeItem,
-  updateItemQuantity,
-} from "@/lib/utils/cartActions";
-import type { Cart } from "@/lib/shopify/types";
 
-// Atom to hold the cart state
-export const cart = atom<Cart | null>(null);
+// Tipo para los elementos del carrito
+type CartItem = {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+};
 
-// Computed store for total quantity in the cart
-export const totalQuantity = computed(cart, (c) => (c ? c.totalQuantity : 0));
+// Atom para mantener el estado del carrito
+export const cart = atom<CartItem[]>([]);
 
-// Atom to manage the layout view state (card or list)
+// Computed store para calcular la cantidad total en el carrito
+export const totalQuantity = computed(cart, (c) =>
+  c.reduce((total, item) => total + item.quantity, 0)
+);
+
+// Atom para gestionar el estado de la vista del carrito (tarjeta o lista)
 export const layoutView = atom<"card" | "list">("card");
 
-// Function to set a new layout view
+// Función para cambiar la vista del carrito
 export function setLayoutView(view: "card" | "list") {
   layoutView.set(view);
 }
 
-// Function to get the current layout view
+// Función para obtener la vista actual
 export function getLayoutView() {
   return layoutView.get();
 }
 
-// Update cart state in the store
-export async function refreshCartState() {
-  const cartId = Cookies.get("cartId");
-  if (cartId) {
-    const currentCart = await getCart(cartId);
-    cart.set(currentCart as any);
+// Función para agregar un producto al carrito
+export function addItemToCart(item: CartItem) {
+  const currentCart = cart.get();
+  const existingItem = currentCart.find((cartItem) => cartItem.id === item.id);
+
+  if (existingItem) {
+    // Si el producto ya está en el carrito, incrementa la cantidad
+    existingItem.quantity += item.quantity;
+  } else {
+    // Si no está, agrégalo al carrito
+    currentCart.push(item);
   }
+
+  cart.set(currentCart);
+  Cookies.set("cart", JSON.stringify(currentCart)); // Guarda el carrito en cookies
 }
 
-// Add item to the cart and update state
-export async function addItemToCart(selectedVariantId: string) {
-  try {
-    await addItem(selectedVariantId);
-    await refreshCartState();
-    return "Added to cart";
-  } catch (error: any) {
-    throw new Error(error.message || "Failed to add to cart");
-  }
+// Función para eliminar un producto del carrito
+export function removeItemFromCart(itemId: string) {
+  const currentCart = cart.get();
+  const updatedCart = currentCart.filter((cartItem) => cartItem.id !== itemId);
+
+  cart.set(updatedCart);
+  Cookies.set("cart", JSON.stringify(updatedCart)); // Actualiza las cookies
 }
 
-// Remove item from the cart and update state
-export async function removeItemFromCart(lineId: string) {
-  try {
-    await removeItem(lineId);
-    await refreshCartState();
-    return "Removed from cart";
-  } catch (error: any) {
-    throw new Error(error.message || "Failed to remove item from cart");
+// Función para actualizar la cantidad de un producto en el carrito
+export function updateCartItemQuantity(itemId: string, quantity: number) {
+  const currentCart = cart.get();
+  const item = currentCart.find((cartItem) => cartItem.id === itemId);
+
+  if (item) {
+    item.quantity = quantity > 0 ? quantity : 0; // Evita cantidades negativas
   }
+
+  cart.set(currentCart);
+  Cookies.set("cart", JSON.stringify(currentCart)); // Actualiza las cookies
 }
 
-// Update item quantity in the cart and update state
-export async function updateCartItemQuantity(payload: {
-  lineId: string;
-  variantId: string;
-  quantity: number;
-}) {
-  try {
-    await updateItemQuantity(payload);
-    await refreshCartState();
-    return "Cart updated";
-  } catch (error: any) {
-    throw new Error(error.message || "Failed to update cart");
+// Cargar el carrito desde las cookies al inicializar
+export function initializeCart() {
+  const storedCart = Cookies.get("cart");
+  if (storedCart) {
+    cart.set(JSON.parse(storedCart));
   }
 }

@@ -63,7 +63,7 @@ function SubmitButton({
           size={26}
         />
       ) : (
-        "Add To Cart"
+        ""
       )}
     </button>
   );

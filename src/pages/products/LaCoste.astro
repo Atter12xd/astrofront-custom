@@ -1,0 +1,88 @@
+---
+import Base from "@/layouts/Base.astro";
+import CallToAction from "@/partials/CallToAction.astro";
+import ProductCard from "./ProductCard"; // Asegúrate de que esta ruta sea correcta
+
+// Simulando los datos dinámicos de los productos de "THE NORTH FACE"
+const products = [
+  {
+    id: "1",
+    title: "LaCoste Clasicc",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/LaCoste10.jpg",
+      
+      
+    ],
+  },
+  {
+    id: "2",
+    title: "LaCoste Cd",
+    description: "",
+    price: "S/ 60.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/LaCoste11.jpg",
+      "/images/LaCoste12.jpg",
+      "/images/LaCoste13.webp",
+      "/images/LaCoste14.webp",
+      
+
+      
+      
+    ],
+  },
+  {
+    id: "3",
+    title: "LaCoste db",
+    description: "",
+    price: "S/ 65.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/LaCoste15.webp",
+      "/images/LaCoste16.webp",
+      
+
+      
+      
+    ],
+  },
+  {
+    id: "4",
+    title: "LaCoste bn",
+    description: "",
+    price: "S/ 49.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/LaCoste17.jpg",
+      "/images/LaCoste18.jpg",
+      "/images/LaCoste19.jpg",
+      
+
+      
+      
+    ],
+  },
+  
+  
+ 
+];
+---
+
+<Base title="LaCoste">
+  <section class="py-10">
+    <div class="container grid grid-cols-1 gap-10">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} client:load />
+      ))}
+    </div>
+  </section>
+
+  <CallToAction />
+</Base>

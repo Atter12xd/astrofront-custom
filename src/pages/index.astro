@@ -3,28 +3,245 @@ import FeaturedProducts from "@/components/FeaturedProducts.astro";
 import config from "@/config/config.json";
 import CollectionsSlider from "@/functional-components/CollectionsSlider";
 import Base from "@/layouts/Base.astro";
-import { getCollectionProducts, getCollections } from "@/lib/shopify";
 import CallToAction from "@/partials/CallToAction.astro";
 import HeroSlider from "src/layouts/functional-components/HeroSlider";
 
-const { collections } = config.shopify;
 
-// Fetch slider images for the HeroSlider
-const sliderImages = await getCollectionProducts({
-  collection: collections.hero_slider,
-});
-const heroProducts = sliderImages.products;
+// Datos de ejemplo. Puedes reemplazar estos datos con los productos reales.
+const heroProducts = [
+  {
+    id: "1",
+    title: "SABER MAS DE NOSOTROS",
+    description: "Ropa cómoda y elegante.",
+    link: "/about", // Enlace específico para este producto
+    featuredImage: { url: "/images/hugo-boxfirenegro.jpeg" },
+  },
+  {
+    id: "2",
+    title: "Contactanos si tiene alguna consulta",
+    description: "Ropa cómoda y elegante.",
+    link: "/contact", // Enlace específico para este producto
+    featuredImage: { url: "/images/hugo-boxlogorandom.webp" },
+  },
+];
 
-const collectionProducts = await getCollections();
-
-// Fetch featured products
-const { products: featuredProducts } = await getCollectionProducts({
-  collection: collections.featured_products,
-  reverse: false,
-});
+const collectionProducts = [
+  {
+    id: "1",
+    title: "",
+    brand: "TOMMY H", // Marca del producto
+    featuredImage: { url: "/images/tomi_com.webp" },
+    link: "/products/tommy-h", // Cambia este valor
+  },
+  {
+    id: "2",
+    title: "",
+    brand: "TOMMY H", // Marca del producto    
+    featuredImage: { url: "/images/Polo_tom.webp" },
+    link: "/products/tommy-h",// Enlace al producto
+  },
+  {
+    id: "3",
+    title: "",
+    brand: "TOMMY H", // Nueva entrada
+    featuredImage: { url: "/images/polo_tom_fre.webp" },
+    link: "/products/tommy-h",// Enlace al producto
+  },
+  {
+    id: "4",
+    title: "",
+    brand: "TOMMY H", // Nueva entrada
+    featuredImage: { url: "/images/polo_tom_es.webp" },
+    link: "/products/tommy-h", // Enlace al producto
+  },
+  {
+    id: "5",
+    title: "",
+    brand: "TOMMY H", // Marca del producto
+    featuredImage: { url: "/images/tomi_com.webp" },
+    link: "/products/tommy-h", // Enlace al producto
+  },
+  {
+    id: "6",
+    title: "",
+    brand: "TOMMY H", // Marca del producto    
+    featuredImage: { url: "/images/Polo_tom.webp" },
+    link: "/products/tommy-h", // Enlace al producto
+  },
+ 
+  {
+    id: "7",
+    title: "",
+    brand: "THE NORT FACE", // Marca del producto
+    featuredImage: { url: "/images/THE_NORT_FACE1.avif" },  
+    link: "/products/the-north-face", // Enlace al producto
+  },
+  {
+    id: "8",
+    title: "",
+    brand: "THE NORT FACE", // Marca del producto
+    featuredImage: { url: "/images/THE_NORT_FACE3.avif" },
+    link: "/products/the-north-face", // Enlace al producto
+  },
+  {
+    id: "9",
+    title: "",
+    brand: "THE NORT FACE", // Marca del producto
+    featuredImage: { url: "/images/THE_NORT_FACE5.webp" },
+    link: "/products/the-north-face", // Enlace al producto
+  },
+  {
+    id: "10",
+    title: "",
+    brand: "THE NORT FACE", // Marca del producto
+    featuredImage: { url: "/images/THE_NORT_FACE6.webp" },
+    link: "/products/the-north-face", // Enlace al producto
+  },
+  {
+    id: "11",
+    title: "",
+    brand: "THE NORT FACE", // Marca del producto
+    featuredImage: { url: "/images/the_norht_face5.jpg" },  
+    link: "/products/the-north-face", // Enlace al producto
+  },
+  {
+    id: "12",
+    title: "",
+    brand: "THE NORT FACE", // Marca del producto
+    featuredImage: { url: "/images/the_norht_face6.jpg" },  
+    link: "/products/the-north-face", // Enlace al producto
+  },
+ 
+  {
+    id: "13",
+    title: "",
+    brand: "SUPREME", // Marca del producto
+    featuredImage: { url: "/images/supreme3.webp" },  
+    link: "/products/supreme", // Enlace al producto
+  },
+  {
+    id: "14",
+    title: "",
+    brand: "SUPREME", // Marca del producto
+    featuredImage: { url: "/images/supreme5.webp" },
+    link: "/products/supreme", // Enlace al producto
+  },
+  
+  
+  {
+    id: "19",
+    title: "",
+    brand: "LACOSTE", // Marca del producto
+    featuredImage: { url: "/images/lacoste1.jpeg" },  
+    link: "/products/LaCoste", // Enlace al producto
+  },
+  {
+    id: "20",
+    title: "",
+    brand: "LACOSTE", // Marca del producto
+    featuredImage: { url: "/images/lacoste2.webp" },
+    link: "/products/LaCoste", // Enlace al producto
+  },
+  {
+    id: "21",
+    title: "",
+    brand: "LACOSTE", // Marca del producto
+    featuredImage: { url: "/images/LaCoste11.jpg" },
+    link: "/products/LaCoste", // Enlace al producto
+  },
+  {
+    id: "22",
+    title: "",
+    brand: "LACOSTE", // Marca del producto
+    featuredImage: { url: "/images/LaCoste14.webp" },
+    link: "/products/LaCoste", // Enlace al producto
+  },
+  {
+    id: "23",
+    title: "",
+    brand: "LACOSTE", // Marca del producto
+    featuredImage: { url: "/images/LaCoste15.webp" },  
+    link: "/products/LaCoste", // Enlace al producto
+  },
+  {
+    id: "24",
+    title: "",
+    brand: "LACOSTE", // Marca del producto
+    featuredImage: { url: "/images/LaCoste16.webp" },
+    link: "/products/LaCoste", // Enlace al producto
+  },
+  
+  {
+    id: "25",
+    title: "",
+    brand: "Columbia", // Marca del producto
+    featuredImage: { url: "/images/columbia1.webp" },
+    link: "/products/columbia", // Enlace al producto
+  },
+  {
+    id: "26",
+    title: "",
+    brand: "Columbia", // Marca del producto
+    featuredImage: { url: "/images/columbia2.webp" },  
+    link: "/products/columbia", // Enlace al producto
+  },
+  {
+    id: "27",
+    title: "",
+    brand: "Columbia", // Marca del producto
+    featuredImage: { url: "/images/columbia3.webp" },
+    link: "/products/columbia", // Enlace al producto
+  },
+  {
+    id: "28",
+    title: "",
+    brand: "Columbia", // Marca del producto
+    featuredImage: { url: "/images/columbia4.jpg" },
+    link: "/products/columbia", // Enlace al producto
+  },
+  {
+    id: "29",
+    title: "",
+    brand: "Columbia", // Marca del producto
+    featuredImage: { url: "/images/columbia5.png" },
+    link: "/products/columbia", // Enlace al producto
+  },
+  {
+    id: "30",
+    title: "",
+    brand: "Columbia", // Marca del producto
+    featuredImage: { url: "/images/columbia6.png" },
+    link: "/products/columbia", // Enlace al producto
+  },
+  
+ 
+ 
+];
+const featuredProducts = [
+  {
+    id: "1",
+    title: "Polo BOSS",
+    handle: "boos", // Solo el identificador del producto
+    featuredImage: { url: "/images/boss-goat-white.webp", altText: "Camisa Elegante" },
+    priceRange: { minVariantPrice: { amount: "ver precio", currencyCode: "" } },
+    availableForSale: true,
+    variants: [{ id: "1" }], // Agregar un ejemplo de variantes
+  },
+  {
+    id: "2",
+    title: "Polo BOSS",
+    handle: "boos", // Solo el identificador del producto
+    featuredImage: { url: "/images/boss-goat-black.webp", altText: "Pantalón Formal" },
+    priceRange: { minVariantPrice: { amount: "ver precio", currencyCode: "" } },
+    availableForSale: true,
+    variants: [{ id: "2" }],
+  },
+];
 ---
 
+
 <Base>
+  {/* Sección Hero */}
   <section>
     <div class="container">
       <div class="bg-gradient py-10 rounded-md">
@@ -33,22 +250,22 @@ const { products: featuredProducts } = await getCollectionProducts({
     </div>
   </section>
 
-  {/* category section */}
+  {/* Sección de Colecciones */}
   <section class="section">
     <div class="container">
       <div class="text-center mb-6 md:mb-14">
-        <h2>Collections</h2>
+        <h2>Productos</h2>
       </div>
       <CollectionsSlider client:load collections={collectionProducts} />
     </div>
   </section>
 
-  {/* Featured Products section */}
+  {/* Sección de Productos Destacados */}
   <section>
     <div class="container">
       <div class="text-center mb-6 md:mb-14">
-        <h2 class="mb-2">Featured Products</h2>
-        <p class="md:h5">Explore Today's Featured Picks!</p>
+        <h2 class="mb-2">Productos Destacados</h2>
+        <p class="md:h5">Explora nuestras mejores ofertas de esta semana.</p>
       </div>
       <FeaturedProducts products={featuredProducts} />
     </div>

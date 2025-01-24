@@ -1,130 +1,142 @@
 ---
-import config from "@/config/config.json";
 import Base from "@/layouts/Base.astro";
-import { markdownify } from "@/lib/utils/textConverter";
 import PageHeader from "@/partials/PageHeader.astro";
-import type { ContactUsItem } from "@/types";
-import { getEntry } from "astro:content";
 
-const contact = await getEntry("contact", "-index");
-const { contact_form_action }: { contact_form_action: string } = config.params;
-const { title, meta_title, description, image, contact_meta } = contact.data;
+// Información de contacto
+const contactMeta = [
+  { name: "Dirección", contact: "Huánuco" },
+  { name: "Correo Electrónico", contact: "sotomayor.business@gmail.com" },
+  { name: "WhatsApp", contact: "+51 936 551 949" },
+  { name: "Horario de Atención", contact: "Lunes a Viernes: 9:00 a.m. - 10:00 p.m. Sábados: 9:00 a.m. - 10:00 p.m." },
+];
 ---
 
-<Base
-  title={title}
-  meta_title={meta_title}
-  description={description}
-  image={image}
->
-  <PageHeader title={title} />
+<Base title="Contáctanos" meta_title="Contacto - LussoZenith">
+  <!-- Encabezado de la página -->
+  <PageHeader title="Contáctanos" />
 
+  <!-- Sección de información de contacto -->
   <section class="pt-12 xl:pt-24">
     <div class="container">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {
-          contact_meta &&
-            contact_meta?.map((contact: ContactUsItem) => (
-              <div class="p-10 bg-theme-light dark:bg-darkmode-theme-light rounded-md text-center">
-                <p
-                  set:html={markdownify(contact.name)}
-                  class="mb-6 h3 font-medium text-dark dark:text-darkmode-dark"
-                />
-                <p set:html={markdownify(contact.contact)} />
-              </div>
-            ))
-        }
+        {contactMeta.map((item) => (
+          <div class="p-10 bg-theme-light dark:bg-darkmode-theme-light rounded-md text-center shadow-md">
+            <p class="mb-6 h3 font-medium text-dark dark:text-darkmode-dark">
+              {item.name}
+            </p>
+            <p class="text-gray-600 dark:text-gray-400">{item.contact}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
+  <!-- Formulario de contacto -->
   <section class="section">
     <div class="container">
       <div class="mx-auto lg:col-10">
-        <h2 class="mb-14 text-center">We would love to hear from you!</h2>
-
+        <h2 class="mb-14 text-center">Rellene el formulario para la consulta</h2>
         <form
-          class="border border-border dark:border-darkmode-border rounded-md p-10"
-          action={contact_form_action}
-          method="POST"
+          id="contactForm"
+          class="border border-border dark:border-darkmode-border rounded-md p-10 shadow-lg"
         >
-          <div class="mb-6 md:grid grid-cols-2 gap-x-8 max-md:space-y-6">
+          <!-- Campos del formulario -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
             <div>
-              <label for="name" class="form-label">
-                First Name <span class="text-red-500">*</span>
-              </label>
-              <input
-                id="name"
-                name="name"
-                class="form-input"
-                placeholder="John"
-                type="text"
-                required
-              />
+              <label for="name" class="form-label">Nombre <span class="text-red-500">*</span></label>
+              <input id="name" name="name" class="form-input" type="text" placeholder="Juan" required />
             </div>
-
             <div>
-              <label for="name" class="form-label"> Last Name </label>
-              <input
-                id="name"
-                name="name"
-                class="form-input"
-                placeholder="Doe"
-                type="text"
-              />
+              <label for="last_name" class="form-label">Apellido</label>
+              <input id="last_name" name="last_name" class="form-input" type="text" placeholder="Pérez" />
             </div>
           </div>
-
-          <div class="mb-6 md:grid grid-cols-2 gap-x-8 max-md:space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
             <div>
-              <label for="email" class="form-label">
-                Email Address <span class="text-red-500">*</span>
-              </label>
-              <input
-                id="email"
-                name="email"
-                class="form-input"
-                placeholder="john.doe@email.com"
-                type="email"
-                required
-              />
+              <label for="email" class="form-label">Correo Electrónico <span class="text-red-500">*</span></label>
+              <input id="email" name="email" class="form-input" type="email" placeholder="juan.perez@email.com" required />
             </div>
-
             <div>
-              <label for="name" class="form-label">
-                Subject <span class="text-red-500">*</span>
-              </label>
-              <input
-                id="name"
-                name="name"
-                class="form-input"
-                placeholder="Enquiry About"
-                type="text"
-                required
-              />
+              <label for="subject" class="form-label">Asunto <span class="text-red-500">*</span></label>
+              <input id="subject" name="subject" class="form-input" type="text" placeholder="Consulta sobre..." required />
             </div>
           </div>
-
           <div class="mb-6">
-            <label for="message" class="form-label">
-              Message <span class="text-red-500">*</span>
-            </label>
+            <label for="message" class="form-label">Mensaje <span class="text-red-500">*</span></label>
             <textarea
               id="message"
               name="message"
               class="form-input"
-              placeholder="Type your message..."
-              rows={8}
-              required></textarea>
+              placeholder="Escribe tu mensaje..."
+              rows="8"
+              required
+            ></textarea>
           </div>
-
           <div class="flex justify-end">
-            <button type="submit" class="btn btn-primary">
-              Send Message
-            </button>
+            <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
           </div>
         </form>
       </div>
     </div>
   </section>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const contactForm = document.getElementById("contactForm");
+  
+      if (!contactForm) {
+        console.error("Formulario de contacto no encontrado");
+        return;
+      }
+  
+      contactForm.addEventListener("submit", (e) => {
+        e.preventDefault(); // Evitar la recarga de la página
+  
+        try {
+          // Obtener valores del formulario
+          const nameInput = document.getElementById("name") as HTMLInputElement | null;
+          const lastNameInput = document.getElementById("last_name") as HTMLInputElement | null;
+          const emailInput = document.getElementById("email") as HTMLInputElement | null;
+          const subjectInput = document.getElementById("subject") as HTMLInputElement | null;
+          const messageInput = document.getElementById("message") as HTMLTextAreaElement | null;
+  
+          if (!nameInput || !emailInput || !subjectInput || !messageInput) {
+            alert("Ocurrió un error al obtener los campos del formulario. Por favor, recarga la página.");
+            return;
+          }
+  
+          const name = nameInput.value.trim();
+          const lastName = lastNameInput?.value.trim() || "N/A";
+          const email = emailInput.value.trim();
+          const subject = subjectInput.value.trim();
+          const message = messageInput.value.trim();
+  
+          // Validar que todos los campos obligatorios estén completos
+          if (!name || !email || !subject || !message) {
+            alert("Por favor completa todos los campos obligatorios.");
+            return;
+          }
+  
+          // Generar mensaje para WhatsApp
+          const whatsappNumber = "+51936551949";
+          const text = `Hola, me gustaría consultar lo siguiente:\n\n- **Nombre:** ${name} ${lastName}\n- **Correo Electrónico:** ${email}\n- **Asunto:** ${subject}\n- **Mensaje:** ${message}`;
+  
+          // Enlace a WhatsApp
+          const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+  
+          // Intentar abrir el enlace en una nueva pestaña
+          const newWindow = window.open(whatsappURL, "_blank");
+  
+          // Verificar si la ventana se abrió correctamente
+          if (!newWindow || newWindow.closed || typeof newWindow.closed === "undefined") {
+            alert("Por favor, habilita las ventanas emergentes en tu navegador para continuar.");
+          }
+        } catch (error) {
+          console.error("Error al intentar enviar el mensaje:", error);
+          alert("Ocurrió un error. Por favor, inténtalo nuevamente.");
+        }
+      });
+    });
+  </script>
+  
 </Base>

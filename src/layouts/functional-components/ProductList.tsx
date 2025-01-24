@@ -1,16 +1,16 @@
 import config from "@/config/config.json";
 import { defaultSort, sorting } from "@/lib/constants";
-import type { PageInfo, Product } from '@/lib/shopify/types';
-import React, { useEffect, useRef, useState } from 'react';
+import type { PageInfo, Product } from "@/lib/shopify/types";
+import React, { useEffect, useRef, useState } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
-import { AddToCart } from './cart/AddToCart';
+import { AddToCart } from "./cart/AddToCart";
 
 const ProductList = ({
   initialProducts,
   initialPageInfo,
   sortKey,
   reverse,
-  searchValue
+  searchValue,
 }: {
   initialProducts: Product[];
   initialPageInfo: PageInfo;
@@ -19,13 +19,13 @@ const ProductList = ({
   searchValue: string | null;
 }) => {
   const { currencySymbol } = config.shopify;
-  const [products, setProducts] = useState(initialProducts);
-  const [pageInfo, setPageInfo] = useState(initialPageInfo);
+  const [products, setProducts] = useState(initialProducts || []);
+  const [pageInfo, setPageInfo] = useState(initialPageInfo || null);
   const [loading, setLoading] = useState(false);
-  const [currentSortKey, setCurrentSortKey] = useState(sortKey);
-  const [currentReverse, setCurrentReverse] = useState(reverse);
+  const [currentSortKey, setCurrentSortKey] = useState(sortKey || defaultSort.sortKey);
+  const [currentReverse, setCurrentReverse] = useState(reverse || defaultSort.reverse);
   const [sortChanged, setSortChanged] = useState(false);
-  const loaderRef = useRef(null);
+  const loaderRef = useRef<HTMLDivElement | null>(null);
 
   const getSortParams = (sortKey: string) => {
     const sortOption = sorting.find((item) => item.slug === sortKey) || defaultSort;
@@ -33,56 +33,55 @@ const ProductList = ({
   };
 
   const loadMoreProducts = async () => {
-    if (loading || !pageInfo.hasNextPage) return;
+    if (loading || !pageInfo?.hasNextPage) return;
 
     setLoading(true);
     try {
       const response = await fetch(
-        `/api/products.json?cursor=${pageInfo.endCursor || ''}&sortKey=${currentSortKey}&reverse=${currentReverse}`
+        `/api/products.json?cursor=${pageInfo.endCursor || ""}&sortKey=${currentSortKey}&reverse=${currentReverse}`
       );
-      if (!response.ok) throw new Error('Failed to fetch');
+      if (!response.ok) throw new Error("Failed to fetch");
       const { products: newProducts, pageInfo: newPageInfo } = await response.json();
 
       setProducts((prevProducts) => [...prevProducts, ...newProducts]);
       setPageInfo(newPageInfo);
       setSortChanged(false);
     } catch (error) {
-      console.error('Error loading more products:', error);
+      console.error("Error loading more products:", error);
     } finally {
       setLoading(false);
     }
   };
 
   const updateStateFromURL = () => {
+    if (typeof window === "undefined") return;
+
     const params = new URLSearchParams(window.location.search);
     const newSortKey = params.get("sortKey") || sortKey;
 
     const { sortKey: mappedSortKey, reverse: mappedReverse } = getSortParams(newSortKey);
 
-    // Update only if URL params differ from current state
     if (mappedSortKey !== currentSortKey || mappedReverse !== currentReverse) {
       setCurrentSortKey(mappedSortKey);
       setCurrentReverse(mappedReverse);
       setProducts([]); // Clear products to load new set based on params
       setPageInfo(initialPageInfo); // Reset page info
-      setSortChanged(true); // Set the flag to load products based on new sortKey and reverse
+      setSortChanged(true); // Set flag to reload products
     }
   };
 
   useEffect(() => {
-    // Listen for URL changes and handle state updates
-    window.addEventListener("popstate", updateStateFromURL);
+    if (typeof window !== "undefined") {
+      window.addEventListener("popstate", updateStateFromURL);
 
-    // Cleanup event listener on component unmount
-    return () => {
-      window.removeEventListener("popstate", updateStateFromURL);
-    };
+      return () => {
+        window.removeEventListener("popstate", updateStateFromURL);
+      };
+    }
   }, [initialPageInfo]);
 
-  // Intersection observer to trigger loading more products
   useEffect(() => {
     if (sortChanged) {
-      // Load products if sorting has changed
       loadMoreProducts();
     } else {
       const observer = new IntersectionObserver(
@@ -94,14 +93,10 @@ const ProductList = ({
         { threshold: 1.0 }
       );
 
-      if (loaderRef.current) {
-        observer.observe(loaderRef.current);
-      }
+      if (loaderRef.current) observer.observe(loaderRef.current);
 
       return () => {
-        if (loaderRef.current) {
-          observer.unobserve(loaderRef.current);
-        }
+        if (loaderRef.current) observer.unobserve(loaderRef.current);
       };
     }
   }, [pageInfo?.endCursor, currentSortKey, currentReverse, sortChanged]);
@@ -119,7 +114,7 @@ const ProductList = ({
         </p>
       ) : null}
 
-      {products?.length === 0 && (
+      {products.length === 0 && (
         <div className="mx-auto pt-5 text-center">
           <img
             className="mx-auto mb-6"
@@ -129,14 +124,12 @@ const ProductList = ({
             height={184}
           />
           <h1 className="h2 mb-4">No Product Found!</h1>
-          <p>
-            We couldn&apos;t find what you filtered for. Try filtering again.
-          </p>
+          <p>We couldn&apos;t find what you filtered for. Try filtering again.</p>
         </div>
       )}
 
       <div className="space-y-10">
-        {products?.map((product: Product) => {
+        {products.map((product: Product) => {
           const {
             id,
             title,
@@ -157,7 +150,6 @@ const ProductList = ({
                 <div className="col-4">
                   <img
                     src={featuredImage?.url || "/images/product_image404.jpg"}
-                    // fallback={'/images/category-1.png'}
                     width={312}
                     height={269}
                     alt={featuredImage?.altText || "fallback image"}
@@ -172,19 +164,15 @@ const ProductList = ({
 
                   <div className="flex items-center gap-x-2 mt-2">
                     <span className="text-light dark:text-darkmode-light text-xs md:text-lg font-bold">
-                      ৳ {priceRange?.minVariantPrice?.amount}{" "}
+                      {currencySymbol} {priceRange?.minVariantPrice?.amount}{" "}
                       {priceRange?.minVariantPrice?.currencyCode}
                     </span>
-                    {parseFloat(
-                      compareAtPriceRange?.maxVariantPrice?.amount,
-                    ) > 0 ? (
+                    {parseFloat(compareAtPriceRange?.maxVariantPrice?.amount) > 0 && (
                       <s className="text-light dark:text-darkmode-light text-xs md:text-base font-medium">
                         {currencySymbol}{" "}
                         {compareAtPriceRange?.maxVariantPrice?.amount}{" "}
                         {compareAtPriceRange?.maxVariantPrice?.currencyCode}
                       </s>
-                    ) : (
-                      ""
                     )}
                   </div>
 
@@ -192,9 +180,9 @@ const ProductList = ({
                     {description}
                   </p>
                   <AddToCart
-                    variants={product?.variants}
+                    variants={variants}
                     availableForSale={product?.availableForSale}
-                    handle={product?.handle}
+                    handle={handle}
                     defaultVariantId={defaultVariantId}
                     stylesClass={
                       "btn btn-outline-primary max-md:btn-sm drop-shadow-md"
@@ -209,7 +197,7 @@ const ProductList = ({
 
       {pageInfo?.hasNextPage && (
         <div ref={loaderRef} className="text-center py-4">
-          {loading ? <BiLoaderAlt className={`animate-spin`} size={30} /> : 'Scroll for more'}
+          {loading ? <BiLoaderAlt className="animate-spin" size={30} /> : "Scroll for more"}
         </div>
       )}
     </div>

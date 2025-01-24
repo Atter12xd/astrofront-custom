@@ -1,20 +1,33 @@
 ---
-title: "Connect with Us"
-meta_title: ""
-description: "this is meta description"
+title: "Contáctanos"
+meta_title: "Contacto - LussoZenith"
+description: "Estamos aquí para ayudarte. Descubre cómo ponerte en contacto con LussoZenith a través de nuestros canales de atención."
 draft: false
 
-#Contact Options
+# Contact Options
 contact_meta:
-  - name: "Address"
-    contact: "123 Main Street, Anytown, </br> CA 12345 - USA"
+  - name: "Dirección"
+    contact: "Huánuco"
 
-  - name: "Email"
-    contact: "yourmail@domain.com </br> support@domain.com"
+  - name: "Correo Electrónico"
+    contact: "sotomayor.business@gmail.com"
 
-  - name: "Phone"
-    contact: "Mobile: (08) 123 456 789 </br> Hotline: 1009 678 456"
+  - name: "WhatsApp"
+    contact: "+51 999 123 456"
 
-  - name: "Shop Time"
-    contact: "Available at 10am-8pm </br>"
+  - name: "Horario de Atención"
+    contact: "Lunes a Viernes: 9:00 a.m. - 10:00 p.m.  Sábados: 9:00 a.m. - 10:00 p.m."
+    
 ---
+
+## ¡Estamos aquí para ayudarte!
+En LussoZenith, valoramos cada consulta y estamos comprometidos a ofrecerte la mejor atención. Si tienes preguntas, comentarios o necesitas asistencia, no dudes en contactarnos por cualquiera de los siguientes medios:
+
+- **Correo Electrónico**: [sotomayor.business@gmail.com](mailto:sotomayor.business@gmail.com)  
+- **Teléfono/WhatsApp**: [+51 999 123 456](tel:+51999123456)  
+
+### Horario de Atención:
+- **Lunes a Viernes**: 9:00 a.m. - 10:00 p.m.  
+- **Sábados**: 9:00 a.m. - 10:00 p.m.  
+
+También puedes enviarnos un mensaje directo desde nuestro formulario en la página web. ¡Estaremos encantados de atenderte y resolver todas tus inquietudes!

@@ -3,17 +3,43 @@ import ProductLayouts from "@/functional-components/product/ProductLayouts";
 import ProductFilters from "@/functional-components/ProductFilters";
 import ProductLayoutViews from "@/functional-components/ProductLayoutViews";
 import Base from "@/layouts/Base.astro";
-import { defaultSort, sorting } from "@/lib/constants";
-import {
-  getCollectionProducts,
-  getCollections,
-  getHighestProductPrice,
-  getProducts,
-  getVendors,
-} from "@/lib/shopify";
-import type { PageInfo, Product } from "@/lib/shopify/types";
 import CallToAction from "@/partials/CallToAction.astro";
 
+// Datos simulados
+const defaultSort = { sortKey: "TITLE", reverse: false };
+const sorting = [
+  { slug: "title", sortKey: "TITLE", reverse: false },
+  { slug: "price", sortKey: "PRICE", reverse: true },
+];
+
+const mockProducts = [
+  {
+    title: "Product 1",
+    vendor: "Vendor A",
+    tags: ["tag1", "tag2"],
+    collections: { nodes: [{ title: "Category A" }] },
+  },
+  {
+    title: "Product 2",
+    vendor: "Vendor B",
+    tags: ["tag3"],
+    collections: { nodes: [{ title: "Category B" }] },
+  },
+];
+
+const mockCategories = [
+  { title: "Category A" },
+  { title: "Category B" },
+];
+
+const mockVendors = [
+  { vendor: "Vendor A" },
+  { vendor: "Vendor B" },
+];
+
+const mockMaxPrice = 100;
+
+// Obtener parametros
 const searchParams = Astro.url.searchParams;
 const searchParamsObject = Object.fromEntries(searchParams.entries());
 
@@ -29,124 +55,34 @@ const cursor = searchParamsObject.cursor || null;
 const { sortKey, reverse } =
   sorting.find((item) => item.slug === sort) || defaultSort;
 
-let productsData: any;
-let vendorsWithCounts: { vendor: string; productCount: number }[] = [];
-let categoriesWithCounts: { category: string; productCount: number }[] = [];
+// Datos procesados
+const vendorsWithCounts = mockVendors.map((vendor) => {
+  const productCount = mockProducts.filter(
+    (product) => product.vendor === vendor.vendor
+  ).length;
+  return { vendor: vendor.vendor, productCount };
+});
 
-if (searchValue || brand || minPrice || maxPrice || category || tag) {
-  let queryString = "";
+const categoriesWithCounts = mockCategories.map((category) => {
+  const productCount = mockProducts.filter((product) =>
+    product.collections.nodes.some(
+      (collectionNode) => collectionNode.title === category.title
+    )
+  ).length;
+  return { category: category.title, productCount };
+});
 
-  if (minPrice || maxPrice) {
-    queryString += `variants.price:<=${maxPrice} variants.price:>=${minPrice}`;
-  }
-
-  if (searchValue) {
-    queryString += ` ${searchValue}`;
-  }
-
-  if (brand) {
-    Array.isArray(brand)
-      ? (queryString += `${brand.map((b) => `(vendor:${b})`).join(" OR ")}`)
-      : (queryString += `vendor:"${brand}"`);
-  }
-
-  if (tag) {
-    queryString += ` ${tag}`;
-  }
-
-  const query = {
-    sortKey,
-    reverse,
-    query: queryString,
-    cursor: cursor || undefined,
-  };
-
-  try {
-    productsData =
-      category && category !== "all"
-        ? await getCollectionProducts({
-            collection: category,
-            sortKey,
-            reverse,
-          })
-        : await getProducts(query);
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    productsData = { products: [] };
-  }
-
-  const uniqueVendors: string[] = [
-    ...new Set(
-      ((productsData?.products as Product[]) || []).map((product: Product) =>
-        String(product?.vendor || ""),
-      ),
-    ),
-  ];
-
-  const uniqueCategories: string[] = [
-    ...new Set(
-      ((productsData?.products as Product[]) || []).flatMap(
-        (product: Product) =>
-          product.collections.nodes.map(
-            (collectionNode: any) => collectionNode.title || "",
-          ),
-      ),
-    ),
-  ];
-
-  vendorsWithCounts = uniqueVendors.map((vendor: string) => {
-    const productCount = (productsData?.products || []).filter(
-      (product: Product) => product?.vendor === vendor,
-    ).length;
-    return { vendor, productCount };
-  });
-
-  categoriesWithCounts = uniqueCategories.map((category: string) => {
-    const productCount = ((productsData?.products as Product[]) || []).filter(
-      (product: Product) =>
-        product.collections.nodes.some(
-          (collectionNode: any) => collectionNode.title === category,
-        ),
-    ).length;
-    return { category, productCount };
-  });
-} else {
-  // Fetch all products
-  try {
-    productsData = await getProducts({
-      sortKey,
-      reverse,
-      cursor: cursor || undefined,
-    });
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    productsData = { products: [] };
-  }
-}
-
-const categories = await getCollections();
-const vendors = await getVendors({});
-
-const tags = [
-  ...new Set(
-    (
-      productsData as { pageInfo: PageInfo; products: Product[] }
-    )?.products.flatMap((product: Product) => product.tags),
-  ),
-];
-
-const maxPriceData = await getHighestProductPrice();
-
-const initialProducts = productsData.products;
-const initialPageInfo = productsData.pageInfo;
+const tags = [...new Set(mockProducts.flatMap((product) => product.tags))];
+const initialProducts = mockProducts;
+const initialPageInfo = { hasNextPage: false, hasPreviousPage: false };
 ---
 
 <Base title="Products">
   <ProductLayouts
-    categories={categories}
-    vendors={vendors}
+    categories={mockCategories}
+    vendors={mockVendors}
     tags={tags}
-    maxPriceData={maxPriceData}
+    maxPriceData={mockMaxPrice}
     vendorsWithCounts={vendorsWithCounts}
     categoriesWithCounts={categoriesWithCounts}
     client:only="react"
@@ -156,10 +92,10 @@ const initialPageInfo = productsData.pageInfo;
     <div class="row">
       <div class="col-3 hidden lg:block -mt-14">
         <ProductFilters
-          categories={categories}
-          vendors={vendors}
+          categories={mockCategories}
+          vendors={mockVendors}
           tags={tags}
-          maxPriceData={maxPriceData!}
+          maxPriceData={mockMaxPrice}
           vendorsWithCounts={vendorsWithCounts}
           categoriesWithCounts={categoriesWithCounts}
           client:only="react"

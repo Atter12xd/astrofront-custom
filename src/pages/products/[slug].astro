@@ -1,180 +1,170 @@
 ---
-import FeaturedProducts from "@/components/FeaturedProducts.astro";
-import config from "@/config/config.json";
-import { AddToCart } from "@/functional-components/cart/AddToCart";
-import ProductGallery from "@/functional-components/product/ProductGallery";
-import ShowTags from "@/functional-components/product/ShowTags";
-import Tabs from "@/functional-components/product/Tabs";
-import { VariantSelector } from "@/functional-components/product/VariantSelector";
-import SocialShare from "@/functional-components/SocialShare";
 import Base from "@/layouts/Base.astro";
-import { getProduct, getProductRecommendations } from "@/lib/shopify";
-import { getEntry } from "astro:content";
+import CallToAction from "@/partials/CallToAction.astro";
+import ImageGallery from "./ImageGallery";
+import React, { useState } from "react";
 
-const { slug } = Astro.params;
-const product = await getProduct(slug as string);
+// Simulando los datos dinámicos del producto
+const product = {
+  id: "1",
+  title: "Polo Tommy H Classic",
+  description: "Un polo clásico de alta calidad diseñado para un estilo cómodo y elegante.",
+  price: "S/ 129.90",
+  sizes: ["S", "M", "L", "XL"],
+  colors: ["#FFFFFF", "#000000", "#0000FF"], // Blanco, Negro, Azul
+  images: [
+    "/images/Polo_tom.webp",
+    "/images/polo_tom_fre.webp",
+    "/images/polo_tom_es.webp",
+  ],
+};
 
-const { data } = await getEntry("sections", "payments-and-delivery");
-const { payment_methods, estimated_delivery } = data;
-
-if (!product) {
-  return Astro.redirect("/404");
-}
-
-const {
-  id,
-  title,
-  description,
-  descriptionHtml,
-  priceRange,
-  compareAtPriceRange,
-  images,
-  options,
-  variants,
-  tags,
-} = product;
-
-const relatedProducts = await getProductRecommendations(id);
-const defaultVariantId = variants.length > 0 ? variants[0].id : undefined;
-
-const { currencySymbol } = config.shopify;
+// Lista de departamentos y distritos
+const peruRegions = {
+  Lima: ["Miraflores", "San Isidro", "Surco", "Comas", "San Juan de Lurigancho"],
+  Arequipa: ["Cayma", "Cerro Colorado", "Yanahuara", "Paucarpata"],
+  Cusco: ["Wanchaq", "San Sebastián", "Santiago", "Poroy"],
+  Piura: ["Piura", "Sullana", "Talara", "Chulucanas"],
+  "La Libertad": ["Trujillo", "Víctor Larco", "Florencia de Mora", "El Porvenir"],
+};
 ---
 
-<Base>
-  <section class="md:section-sm">
-    <div class="container">
-      <div class="row justify-center">
-        {/* right side contents */}
-        <div class="col-10 md:col-8 lg:col-6">
-          <ProductGallery client:only="react" images={images} />
-        </div>
+<Base title={product.title}>
+  <section class="py-10">
+    <div class="container grid grid-cols-1 lg:grid-cols-2 gap-10">
+      {/* Galería de imágenes */}
+      <ImageGallery client:load images={product.images} />
 
-        {/* left side contents */}
-        <div class="col-10 md:col-8 lg:col-5 md:ml-7 py-6 lg:py-0">
-          <h1 class="text-3xl md:h2 mb-2 md:mb-6">{title}</h1>
+      {/* Detalles del producto */}
+      <div>
+        <h1 class="text-3xl font-bold mb-4">{product.title}</h1>
+        <p class="text-lg text-gray-600 mb-6">{product.description}</p>
+        <p class="text-2xl font-semibold text-primary mb-4">{product.price}</p>
 
-          <div class="flex gap-2 items-center">
-            <h4 class="text-light dark:text-darkmode-light max-md:h2">
-              {currencySymbol}
-              {priceRange?.minVariantPrice.amount}{" "}
-              {priceRange?.minVariantPrice?.currencyCode}
-            </h4>
-            {
-              parseFloat(compareAtPriceRange?.maxVariantPrice.amount) > 0 ? (
-                <s class="text-light max-md:h3 dark:text-darkmode-light">
-                  {currencySymbol}{" "}
-                  {compareAtPriceRange?.maxVariantPrice?.amount}{" "}
-                  {compareAtPriceRange?.maxVariantPrice?.currencyCode}
-                </s>
-              ) : (
-                ""
-              )
-            }
-          </div>
+        {/* Formulario de datos del cliente */}
+        <form id="purchaseForm" class="space-y-4">
+          <label class="block text-lg font-medium">Nombre:</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Ingresa tu nombre"
+            class="w-full p-3 border border-gray-300 rounded-lg"
+            required
+          />
 
-          <div class="my-10 md:my-10 space-y-6 md:space-y-10">
-            <div>
-              {
-                options && (
-                  <VariantSelector
-                    client:only="react"
-                    options={options}
-                    variants={variants}
-                    images={images}
-                  />
-                )
+          <label class="block text-lg font-medium">Teléfono:</label>
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Ingresa tu teléfono"
+            class="w-full p-3 border border-gray-300 rounded-lg"
+            required
+          />
+
+          <label class="block text-lg font-medium">Departamento:</label>
+          <select
+            name="department"
+            class="w-full p-3 border border-gray-300 rounded-lg"
+            required
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              const districtsSelect = document.querySelector(
+                'select[name="district"]'
+              ) as HTMLSelectElement | null;
+
+              if (districtsSelect) {
+                const department = e.target.value;
+                districtsSelect.innerHTML = `
+                  <option value="" disabled selected>Selecciona tu distrito</option>
+                  ${peruRegions[department]?.map(
+                    (district) => `<option value="${district}">${district}</option>`
+                  ).join("")}
+                `;
               }
-            </div>
-          </div>
+            }}
+          >
+            <option value="" disabled selected>
+              Selecciona tu departamento
+            </option>
+            {Object.keys(peruRegions).map((department) => (
+              <option key={department} value={department}>
+                {department}
+              </option>
+            ))}
+          </select>
 
-          <div class="flex gap-4 mt-8 md:mt-10 mb-6">
-            <AddToCart
-              client:only="react"
-              variants={product?.variants}
-              availableForSale={product?.availableForSale}
-              stylesClass={"btn max-md:btn-sm btn-primary"}
-              handle={null}
-              defaultVariantId={defaultVariantId}
-            />
-          </div>
+          <label class="block text-lg font-medium">Distrito:</label>
+          <select
+            name="district"
+            class="w-full p-3 border border-gray-300 rounded-lg"
+            required
+          >
+            <option value="" disabled selected>
+              Selecciona tu distrito
+            </option>
+          </select>
 
-          <div class="mb-8 md:mb-10">
-            <p
-              class="p-2 max-md:text-sm rounded-md bg-theme-light dark:bg-darkmode-theme-light inline"
-            >
-              {estimated_delivery}
-            </p>
-          </div>
+          <label class="block text-lg font-medium">Dirección Exacta:</label>
+          <input
+            type="text"
+            name="exactAddress"
+            placeholder="Ej: Jirón Los Olivos 123"
+            class="w-full p-3 border border-gray-300 rounded-lg"
+            required
+          />
 
-          <div class="flex flex-wrap items-center gap-3">
-            <h5 class="max-md:text-base">Payment:</h5>
-            {
-              payment_methods?.map(
-                (payment: { name: string; image_url: string }) => (
-                  <img
-                    src={payment.image_url}
-                    alt={payment.name}
-                    width={44}
-                    height={32}
-                  />
-                )
-              )
-            }
-          </div>
+          <label class="block text-lg font-medium">Referencia:</label>
+          <input
+            type="text"
+            name="reference"
+            placeholder="Ej: Cerca del parque principal"
+            class="w-full p-3 border border-gray-300 rounded-lg"
+          />
 
-          <hr class="my-6 border border-border dark:border-light" />
+          {/* Botón para continuar */}
+          <button
+            type="button"
+            class="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-opacity-90"
+            onClick={() => {
+              const form = document.getElementById(
+                "purchaseForm"
+              ) as HTMLFormElement | null;
 
-          <div class="flex gap-3 items-center mb-6">
-            <h5 class="max-md:text-base">Share:</h5>
-            <SocialShare
-              socialName={title}
-              className="social-icons"
-              pathname={Astro.url.pathname}
-              client:only="react"
-            />
-          </div>
+              if (!form) {
+                alert("No se pudo encontrar el formulario.");
+                return;
+              }
 
-          {
-            tags.length > 0 && (
-              <div class="flex flex-wrap gap-3 items-center">
-                <h5 class="max-md:text-base">Tags:</h5>
-                <ShowTags client:only="react" tags={tags} />
-              </div>
-            )
-          }
-        </div>
+              const formData = new FormData(form);
+              const customerData = Object.fromEntries(formData.entries());
+
+              if (Object.values(customerData).includes("")) {
+                alert("Por favor completa todos los campos.");
+                return;
+              }
+
+              const whatsappNumber = "51936551949";
+              const message = `
+¡Hola! Estoy interesado en comprar el producto ${product.title}.
+  
+Datos del cliente:
+- Nombre: ${customerData.name}
+- Teléfono: ${customerData.phone}
+- Dirección: ${customerData.exactAddress}, ${customerData.district}, ${customerData.department}, Perú
+- Referencia: ${customerData.reference}
+
+Ahora le enviaré la constancia de mi pago.`;
+
+              const encodedMessage = encodeURIComponent(message);
+              const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+              window.open(whatsappLink, "_blank");
+            }}
+          >
+            Continuar al Pago
+          </button>
+        </form>
       </div>
     </div>
   </section>
 
-  {/* Description of a product  */}
-  {
-    description && (
-      <section>
-        <div class="container">
-          <div class="row">
-            <div class="col-10 lg:col-11 mx-auto mt-12">
-              <Tabs client:only="react" descriptionHtml={descriptionHtml} />
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  {/* Recommended Products section  */}
-  <section class="section">
-    <div class="container">
-      {
-        relatedProducts?.length > 0 && (
-          <>
-            <div class="text-center mb-6 md:mb-14">
-              <h2 class="mb-2">Related Products</h2>
-            </div>
-            <FeaturedProducts products={relatedProducts.slice(0, 4)} />
-          </>
-        )
-      }
-    </div>
-  </section>
+  <CallToAction />
 </Base>
