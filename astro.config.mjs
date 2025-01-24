@@ -8,13 +8,27 @@ import remarkCollapse from "remark-collapse";
 import remarkToc from "remark-toc";
 import config from "./src/config/config.json";
 
-import vercel from "@astrojs/vercel/serverless";
+// Selección del adaptador dinámico
+import vercel from "@astrojs/vercel/serverless"; // Para producción
+import node from "@astrojs/node"; // Para desarrollo local
+
+const isProduction = process.env.NODE_ENV === "production"; // Detectar entorno
 
 export default defineConfig({
-  site: config.site.base_url || "http://examplesite.com", // URL base del sitio
-  base: config.site.base_path || "/", // Ruta base
-  trailingSlash: config.site.trailing_slash ? "always" : "never", // Configuración de slashes
-  output: "static", // Cambiado a "static" para evitar funciones serverless
+  site: config.site.base_url ? config.site.base_url : "http://examplesite.com",
+  base: config.site.base_path ? config.site.base_path : "/",
+  trailingSlash: config.site.trailing_slash ? "always" : "never",
+  output: isProduction ? "server" : "static", // Modo estático para desarrollo local
+
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: "modern-compiler",
+        },
+      },
+    },
+  },
 
   integrations: [
     react(),
@@ -51,5 +65,9 @@ export default defineConfig({
     extendDefaultPlugins: true,
   },
 
-  adapter: vercel(), // Simplificado para usar la configuración predeterminada de Vercel
+  adapter: isProduction
+    ? vercel({
+        runtime: "nodejs18.x", // Especifica el tiempo de ejecución de Node.js
+      })
+    : node({ mode: "standalone" }), // Adaptador para entorno local
 });
