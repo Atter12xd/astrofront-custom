@@ -6,6 +6,8 @@ import AutoImport from "astro-auto-import";
 import { defineConfig } from "astro/config";
 import remarkCollapse from "remark-collapse";
 import remarkToc from "remark-toc";
+
+
 import config from "./src/config/config.json";
 
 import vercel from "@astrojs/vercel/serverless";
@@ -47,12 +49,7 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [
       remarkToc,
-      [
-        remarkCollapse,
-        {
-          test: "Table of contents",
-        },
-      ],
+     
     ],
     shikiConfig: {
       theme: "one-dark-pro",
