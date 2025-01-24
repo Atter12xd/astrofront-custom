@@ -7,10 +7,9 @@ import { defineConfig } from "astro/config";
 import remarkCollapse from "remark-collapse";
 import remarkToc from "remark-toc";
 
-
 import config from "./src/config/config.json";
 
-import vercel from "@astrojs/vercel/serverless";
+import vercel from "@astrojs/vercel"; // Adaptador actualizado
 
 export default defineConfig({
   site: config.site?.base_url || "http://localhost:3000",
@@ -49,7 +48,7 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [
       remarkToc,
-     
+      [remarkCollapse, { test: "Table of contents" }],
     ],
     shikiConfig: {
       theme: "one-dark-pro",
@@ -58,7 +57,5 @@ export default defineConfig({
     extendDefaultPlugins: true,
   },
 
-  adapter: vercel({
-    runtime: "nodejs18.x", // Asegúrate de que el entorno de Vercel está configurado para usar Node.js 18.x
-  }),
+  adapter: vercel(), // Adaptador actualizado
 });
