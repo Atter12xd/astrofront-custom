@@ -10,24 +10,11 @@ import config from "./src/config/config.json";
 
 import vercel from "@astrojs/vercel/serverless";
 
-// https://astro.build/config
 export default defineConfig({
-  site: config.site.base_url ? config.site.base_url : "http://examplesite.com",
-  base: config.site.base_path ? config.site.base_path : "/",
-  trailingSlash: config.site.trailing_slash ? "always" : "never",
-  output: "server", // Cambiar a "static" si no necesitas funciones serverless
-
-  image: {},
-
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          api: "modern-compiler",
-        },
-      },
-    },
-  },
+  site: config.site.base_url || "http://examplesite.com", // URL base del sitio
+  base: config.site.base_path || "/", // Ruta base
+  trailingSlash: config.site.trailing_slash ? "always" : "never", // Configuración de slashes
+  output: "static", // Cambiado a "static" para evitar funciones serverless
 
   integrations: [
     react(),
@@ -64,7 +51,5 @@ export default defineConfig({
     extendDefaultPlugins: true,
   },
 
-  adapter: vercel({
-    runtime: "nodejs18.x", // Especifica el tiempo de ejecución de Node.js
-  }),
+  adapter: vercel(), // Simplificado para usar la configuración predeterminada de Vercel
 });
