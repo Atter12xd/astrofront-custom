@@ -3,22 +3,22 @@
     {
       "name": "facebook",
       "icon": "FaFacebookF",
-      "link": "https://www.facebook.com/themefisher"
+      "link": ""
     },
     {
       "name": "twitter",
       "icon": "FaXTwitter",
-      "link": "https://x.com/themefisher"
+      "link": ""
     },
     {
       "name": "linkedin",
       "icon": "FaLinkedinIn",
-      "link": "https://bd.linkedin.com/company/themefisher"
+      "link": ""
     },
     {
       "name": "github",
       "icon": "FaGithub",
-      "link": "https://github.com/themefisher/astrofront"
+      "link": ""
     }
   ]
 }

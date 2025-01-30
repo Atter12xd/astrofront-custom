@@ -1,5 +1,5 @@
 ---
-enable: true
+enable: false
 title: "¡Aprovecha un 30% de Descuento!"
 sub_title: "Oferta Especial en Pantalon Nike"
 image: "/images/pantalon_oferta.jpeg" # Cambia esta ruta por la imagen real del pantalón
