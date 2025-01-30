@@ -8,7 +8,6 @@ import remarkCollapse from "remark-collapse";
 import remarkToc from "remark-toc";
 
 import config from "./src/config/config.json";
-
 import vercel from "@astrojs/vercel"; // Adaptador actualizado
 
 export default defineConfig({
@@ -30,7 +29,7 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap(),
-    tailwind({ applyBaseStyles: false }),
+    tailwind({ applyBaseStyles: true }), // Asegura que Tailwind aplique estilos en producción
     AutoImport({
       imports: [
         "@/shortcodes/Button",
@@ -57,5 +56,5 @@ export default defineConfig({
     extendDefaultPlugins: true,
   },
 
-  adapter: vercel(), // Adaptador actualizado
+  adapter: vercel({ analytics: true }), // Mejora para Vercel
 });
