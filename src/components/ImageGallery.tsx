@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 // Importa los íconos de Heroicons
 
 const ImageGallery = ({ images }: { images: string[] }) => {
