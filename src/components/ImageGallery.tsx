@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react"; // Usa íconos de Lucide para elegancia
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react";
+// Importa los íconos de Heroicons
 
 const ImageGallery = ({ images }: { images: string[] }) => {
   const [mainImage, setMainImage] = useState(images[0]);
@@ -43,7 +44,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
           onClick={prevImage}
           className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-black/60 to-black/20 text-white p-3 rounded-full opacity-90 hover:opacity-100 hover:scale-110 transition-all shadow-lg hover:shadow-xl"
         >
-          <ChevronLeft size={32} />
+          <ChevronLeftIcon className="w-8 h-8" />
         </button>
 
         {/* Imagen Principal */}
@@ -63,7 +64,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
           onClick={nextImage}
           className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gradient-to-l from-black/60 to-black/20 text-white p-3 rounded-full opacity-90 hover:opacity-100 hover:scale-110 transition-all shadow-lg hover:shadow-xl"
         >
-          <ChevronRight size={32} />
+          <ChevronRightIcon className="w-8 h-8" />
         </button>
       </div>
 

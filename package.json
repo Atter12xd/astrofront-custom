@@ -20,6 +20,7 @@
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.5",
     "@astrojs/vercel": "^8.0.4",
+    "@heroicons/react": "^2.2.0",
     "@nanostores/react": "^0.8.4",
     "astro": "^5.1.9",
     "astro-auto-import": "^0.4.4",
