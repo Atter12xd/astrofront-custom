@@ -26,13 +26,13 @@ const isParentActive = (children: any[]) => {
 
 <header
   class:list={[
-    "header z-30",
+    "header z-30 h-21", /* Reducido a h-16 (antes seguro estaba en h-20 o más) */
     settings.sticky_header && "sticky top-0",
     "transition-shadow duration-300",
   ]}
 >
-  <nav class="navbar flex-wrap container">
-    <div
+<nav class="navbar flex-wrap container py-0"> 
+  <div
       class="order-1 flex items-center justify-between space-x-7 lg:space-x-14"
     >
       <Logo />

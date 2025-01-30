@@ -46,13 +46,13 @@ const HeroSlider = ({ products }: { products: Product[] }) => {
 
               <div className="sm:col-12 lg:col-6">
                 {item.featuredImage && (
-                  <img
-                  src={item.featuredImage.url}
-                  className="mx-auto w-[300px] h-[22px] lg:w-[400px] lg:h-[500px] object-cover rounded-lg"
-                  width={400}
-                  height={250}
-                  alt="banner image"
-                />
+                <img
+                src={item.featuredImage.url}
+                className="mx-auto w-full max-w-[250px] sm:max-w-[300px] lg:max-w-[500px] max-h-[500px] object-cover rounded-lg"
+                width={420}
+                height={420}
+                alt="banner image"
+              />
                 )}
               </div>
             </div>

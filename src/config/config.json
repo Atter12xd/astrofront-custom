@@ -13,9 +13,9 @@
   },
 
   "settings": {
-    "search": true,
+    "search": false,
     "account": true,
-    "sticky_header": true,
+    "sticky_header": false,
     "theme_switcher": true,
     "default_theme": "system"
   },
