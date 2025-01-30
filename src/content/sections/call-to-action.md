@@ -1,15 +1,11 @@
 ---
 enable: true
-title: "¡Aprovecha un 30% de Descuento!"
-sub_title: "Oferta Especial en Pantalon Nike"
-image: "/images/pantalon_oferta.jpeg" # Cambia esta ruta por la imagen real del pantalón
-description: "Renueva tu estilo con este pantalon Nike. ¡Solo por tiempo limitado, obtén un 30% de descuento en esta prenda exclusiva!"
+title: "¿Quieres Conocernos Mejor?"
+sub_title: "Descubre nuestra historia, misión y valores"
+image: "/images/SobreNosotros.jpeg" # Asegúrate de cambiar la ruta por una imagen representativa de la empresa
+description: "En Lusso Zenith, nos apasiona ofrecer productos de alta calidad y un servicio excepcional. Conoce más sobre nuestra historia, misión y el compromiso que tenemos con nuestros clientes."
 button:
   enable: true
-  label: "Comprar Ahora"
-  link: "/products/pantalon-oferta" # Enlace directo al producto en descuento
-discount: "30%" # Indica el descuento
-product_name: "Pantalón Nike"
-product_price: "S/ 129.90" # Precio original
-discounted_price: "S/ 90.93" # Precio después del descuento
+  label: "Sobre Nosotros"
+  link: "/about" # Enlace directo a la página de "Nosotros"
 ---

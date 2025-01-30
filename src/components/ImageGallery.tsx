@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-// Importa los íconos de Heroicons
 
 const ImageGallery = ({ images }: { images: string[] }) => {
   const [mainImage, setMainImage] = useState(images[0]);
@@ -9,6 +8,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isZoomed) return; // No mover si el zoom no está activado
     const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - left) / width) * 100;
     const y = ((e.clientY - top) / height) * 100;
@@ -20,24 +20,23 @@ const ImageGallery = ({ images }: { images: string[] }) => {
     const newIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
     setCurrentIndex(newIndex);
     setMainImage(images[newIndex]);
+    setIsZoomed(false); // Desactivar zoom al cambiar imagen
   };
 
   const nextImage = () => {
     const newIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
     setMainImage(images[newIndex]);
+    setIsZoomed(false); // Desactivar zoom al cambiar imagen
   };
 
   return (
     <div className="image-gallery flex flex-col items-center gap-4">
-      {/* Contenedor de la imagen principal con flechas */}
+      {/* Contenedor de la imagen principal con zoom activable */}
       <div
-        className="relative overflow-hidden rounded-lg w-full max-w-md"
-        onMouseEnter={() => setIsZoomed(true)}
-        onMouseLeave={() => setIsZoomed(false)}
+        className="relative overflow-hidden rounded-lg w-full max-w-md cursor-zoom-in"
+        onClick={() => setIsZoomed(!isZoomed)}
         onMouseMove={handleMouseMove}
-        onTouchStart={() => setIsZoomed(true)}
-        onTouchEnd={() => setIsZoomed(false)}
       >
         {/* Flecha Izquierda */}
         <button
@@ -52,10 +51,11 @@ const ImageGallery = ({ images }: { images: string[] }) => {
           src={mainImage}
           alt="Producto principal"
           className={`w-full rounded-lg object-cover transition-transform duration-300 ${
-            isZoomed ? "scale-[2]" : "scale-100"
+            isZoomed ? "scale-[2.5]" : "scale-100"
           }`}
           style={{
             transformOrigin: `${zoomPosition.x} ${zoomPosition.y}`,
+            cursor: isZoomed ? "zoom-out" : "zoom-in",
           }}
         />
 
@@ -81,6 +81,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
             onClick={() => {
               setMainImage(image);
               setCurrentIndex(index);
+              setIsZoomed(false); // Desactivar zoom al cambiar imagen
             }}
           />
         ))}

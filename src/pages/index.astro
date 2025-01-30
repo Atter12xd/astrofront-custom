@@ -12,17 +12,38 @@ import HeroSlider from "src/layouts/functional-components/HeroSlider";
 const heroProducts = [
   {
     id: "1",
-    title: "Mire nuestas siguientes ofertas",
-    description: "BOSS X GOAT X LEGEND.",
-    link: "/about", // Enlace específico para este producto
+    title: "Mira nuestras siguientes ofertas",
+    description: "THE NORTH FACE - Calidad y estilo para cualquier aventura",
+    link: "/products/the-north-face",
     featuredImage: { url: "/images/hugo-boxfirenegro.jpeg" },
   },
   {
     id: "2",
-    title: "Contactanos si tiene alguna consulta",
-    description: "Ropa cómoda y elegante.",
-    link: "/contact", // Enlace específico para este producto
+    title: "Contáctanos si tienes alguna consulta",
+    description: "Ropa cómoda y elegante para cada ocasión",
+    link: "/contact",
     featuredImage: { url: "/images/hugo-boxlogorandom.webp" },
+  },
+  {
+    id: "3",
+    title: "Nueva Colección 2024",
+    description: "Explora la última moda con nuestra nueva colección",
+    link: "/products/new-collection",
+    featuredImage: { url: "/images/tommy1.jpeg" },
+  },
+  {
+    id: "4",
+    title: "¡Descuentos Exclusivos!",
+    description: "Aprovecha hasta un 50% de descuento en productos seleccionados",
+    link: "/offers",
+    featuredImage: { url: "/images/tommy2.jpeg" },
+  },
+  {
+    id: "5",
+    title: "Accesorios Premium",
+    description: "Complementa tu estilo con nuestra línea exclusiva de accesorios",
+    link: "/accessories",
+    featuredImage: { url: "/images/tommy3.jpeg" },
   },
 ];
 
@@ -44,20 +65,7 @@ const collectionProducts = [
     link: "/products/the-north-face", // Enlace al producto
   },
  
-  {
-    id: "9",
-    title: "",
-    brand: "THE NORT FACE", // Marca del producto
-    featuredImage: { url: "/images/THE_NORT_FACE5.webp" },
-    link: "/products/the-north-face", // Enlace al producto
-  },
-  {
-    id: "10",
-    title: "",
-    brand: "THE NORT FACE", // Marca del producto
-    featuredImage: { url: "/images/theNorthFace11.jpg" },
-    link: "/products/the-north-face", // Enlace al producto
-  },
+  
   
   
  
@@ -69,13 +77,7 @@ const collectionProducts = [
     featuredImage: { url: "/images/supreme3.webp" },  
     link: "/products/supreme", // Enlace al producto
   },
-  {
-    id: "14",
-    title: "",
-    brand: "SUPREME", // Marca del producto
-    featuredImage: { url: "/images/supreme5.webp" },
-    link: "/products/supreme", // Enlace al producto
-  },
+  
   
   
   {
@@ -86,28 +88,7 @@ const collectionProducts = [
     link: "/products/LaCoste", // Enlace al producto
   },
   
-  {
-    id: "21",
-    title: "",
-    brand: "LACOSTE", // Marca del producto
-    featuredImage: { url: "/images/LaCoste11.jpg" },
-    link: "/products/LaCoste", // Enlace al producto
-  },
   
-  {
-    id: "23",
-    title: "",
-    brand: "LACOSTE", // Marca del producto
-    featuredImage: { url: "/images/LaCoste15.webp" },  
-    link: "/products/LaCoste", // Enlace al producto
-  },
-  {
-    id: "24",
-    title: "",
-    brand: "LACOSTE", // Marca del producto
-    featuredImage: { url: "/images/LaCoste17.jpg" },  
-    link: "/products/LaCoste", // Enlace al producto
-  },
   
   {
     id: "25",
@@ -118,14 +99,37 @@ const collectionProducts = [
   },
   
   
+  
+  // 👖 **Nueva Sección de Pantalones**  
   {
-    id: "29",
-    title: "",
-    brand: "Columbia", // Marca del producto
-    featuredImage: { url: "/images/columbia5.png" },
-    link: "/products/columbia", // Enlace al producto
+    id: "30",
+    title: "Pantalón TH TOMMY",
+    brand: "TH TOMMY",
+    featuredImage: { url: "/images/TH1.jpg" },
+    link: "/products/TH",
   },
- 
+  {
+    id: "31",
+    title: "Pantalón PIONIER",
+    brand: "PIONIER",
+    featuredImage: { url: "/images/Pioner1.jpg" },
+    link: "/products/Pioner",
+  },
+  {
+    id: "32",
+    title: "Pantalón Levis",
+    brand: "LEVIS",
+    featuredImage: { url: "/images/LEVIS1.jpg" },
+    link: "/products/Levis",
+  },
+  {
+    id: "33",
+    title: "Pantalón Cat",
+    brand: "CAT",
+    featuredImage: { url: "/images/CAT1.webp" },
+    link: "/products/Cat",
+  }
+
   
  
  
@@ -167,7 +171,7 @@ const featuredProducts = [
   <section class="section">
     <div class="container">
       <div class="text-center mb-6 md:mb-14">
-        <h2>Productos</h2>
+        <h2>Polos</h2>
       </div>
       <CollectionsSlider client:load collections={collectionProducts} />
     </div>
