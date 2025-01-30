@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ImageGallery from "./ImageGallery"; // Importa la galería de imágenes
 
 // Lista de departamentos y distritos
 const peruRegions = {
@@ -75,27 +76,10 @@ const ProductCard = ({ product }: { product: any }) => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-10 border-b pb-10">
-      {/* Galería de imágenes */}
-      <div>
-        <div className="mb-6">
-          <img
-            src={mainImage}
-            alt={product.title}
-            className="w-full rounded-lg object-cover"
-          />
-        </div>
-        <div className="flex space-x-4">
-          {product.images.map((image: string, index: number) => (
-            <img
-              key={index}
-              src={image}
-              alt={`Vista ${index + 1}`}
-              className="w-20 h-20 rounded-lg object-cover cursor-pointer border border-gray-300 hover:border-primary"
-              onClick={() => setMainImage(image)}
-            />
-          ))}
-        </div>
-      </div>
+     {/* Galería de imágenes con zoom */}
+<div>
+  <ImageGallery images={product.images} />
+</div>
 
       {/* Detalles del producto */}
       <div>

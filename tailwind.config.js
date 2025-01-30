@@ -20,8 +20,9 @@ if (theme.fonts.font_family.secondary) {
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
-  safelist: [{ pattern: /^swiper-/ }],
+  safelist: [{ pattern: /^scale-/ }, { pattern: /^hover:scale-/ }, { pattern: /^active:scale-/ }],
   darkMode: "class",
+  important: true, // Asegura que Tailwind sobrescriba otros estilos
   theme: {
     screens: {
       sm: "540px",
@@ -35,6 +36,7 @@ module.exports = {
       padding: "2rem",
     },
     extend: {
+      transform: ["hover", "active"],
       colors: {
         text: theme.colors.default.text_color.default,
         light: theme.colors.default.text_color.light,
@@ -76,6 +78,11 @@ module.exports = {
       },
       opacity: {
         1: "0.01", // Agrega soporte para `opacity-1`
+      },
+      scale: {
+        102: "1.02",
+        104: "1.04",
+        110: "1.10",
       },
     },
   },

@@ -109,6 +109,13 @@
   }
 }
 
+.image-gallery img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.image-gallery:hover img {
+  transform: scale(1.25);
+}
 // swiper pagination
 .swiper-pagination {
   @apply mt-9 flex items-center justify-center space-x-2 text-center;
