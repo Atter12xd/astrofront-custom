@@ -7,7 +7,7 @@ import ProductCard from "../../components/ProductCard"; // Asegúrate de que est
 const products = [
   {
     id: "1",
-    title: "Pantalon Levis",
+    title: "Pantalón Levis Celeste",
     description: "",
     price: "S/ 120.00",
     sizes: ["S", "M", "L", "XL"],
@@ -18,12 +18,47 @@ const products = [
       "/images/LEVIS3.webp",
       
     ],
-  }
+  },
+
+  {
+    id: "2",
+    title: "Pantalón Levis Verde Oscuro",
+    description: "",
+    price: "S/ 120.00",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FFFFFF", "#000000", "#0000FF"], // Blanco, Negro, Azul
+    images: [
+      "/images/pantalon-levis/levisVerdeOscuro1.jpg",
+      "/images/pantalon-levis/levisVerdeOscuro2.jpg",
+      "/images/pantalon-levis/levisVerdeOscuro3.jpg",
+      
+    ],
+  },
+
+  {
+    id: "3",
+    title: "Pantalón Levis Azul Oscuro",
+    description: "",
+    price: "S/ 120.00",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FFFFFF", "#000000", "#0000FF"], // Blanco, Negro, Azul
+    images: [
+    "/images/pantalon-levis/LevisAzulOscuro1.webp",
+    "/images/pantalon-levis/LevisAzulOscuro2.jpeg",
+    "/images/pantalon-levis/LevisAzulOscuro3.webp",
+    "/images/pantalon-levis/LevisAzulOscuro4.jpeg",
+
+      
+    ],
+  },
+
+
+  
  
 ];
 ---
 
-<Base title="Levis">
+<Base title="Pantalón Levis">
   <section class="py-10">
     <div class="container grid grid-cols-1 gap-10">
       {products.map((product) => (

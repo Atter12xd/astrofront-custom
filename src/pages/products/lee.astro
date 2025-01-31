@@ -1,0 +1,39 @@
+---
+import Base from "@/layouts/Base.astro";
+import CallToAction from "@/partials/CallToAction.astro";
+import ProductCard from "../../components/ProductCard"; // Asegúrate de que esta ruta sea correcta
+
+// Simulando los datos dinámicos de los productos de "Tommy H"
+const products = [
+  {
+    id: "1",
+    title: "Pantalón LEE",
+    description: "",
+    price: "S/ 120.00",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FFFFFF", "#000000", "#0000FF"], // Blanco, Negro, Azul
+    images: [
+      "/images/lee/lee1.jpg",
+      "/images/lee/lee2.jpg",
+      "/images/lee/lee3.jpg",
+      
+    ],
+  },
+
+  
+  
+ 
+];
+---
+
+<Base title="Pantalon lee">
+  <section class="py-10">
+    <div class="container grid grid-cols-1 gap-10">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} client:load />
+      ))}
+    </div>
+  </section>
+
+ 
+</Base>

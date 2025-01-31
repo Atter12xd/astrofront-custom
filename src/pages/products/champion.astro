@@ -1,0 +1,53 @@
+---
+import Base from "@/layouts/Base.astro";
+import CallToAction from "@/partials/CallToAction.astro";
+import ProductCard from "../../components/ProductCard"; // Asegúrate de que esta ruta sea correcta
+
+// Simulando los datos dinámicos de los productos de "THE NORTH FACE"
+const products = [
+  {
+    id: "1",
+    title: "Polo Champion a",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/champion/Champion1.webp",
+      "/images/champion/Champion2.webp",
+      "/images/champion/Champion3.webp",
+
+      
+    ],
+  },
+  // prodycto nuevo
+  {
+    id: "2",
+    title: "Polo Champion b",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/champion/Champion4.webp",
+      "/images/champion/Champion5.webp",
+      "/images/champion/Champion6.webp",
+
+      
+    ],
+  },
+ 
+];
+---
+
+<Base title="Polo Champion ">
+  <section class="py-10">
+    <div class="container grid grid-cols-1 gap-10">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} client:load />
+      ))}
+    </div>
+  </section>
+
+  
+</Base>

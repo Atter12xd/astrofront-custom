@@ -1,0 +1,119 @@
+---
+import Base from "@/layouts/Base.astro";
+import CallToAction from "@/partials/CallToAction.astro";
+import ProductCard from "../../components/ProductCard"; // Asegúrate de que esta ruta sea correcta
+
+// Simulando los datos dinámicos de los productos de "THE NORTH FACE"
+const products = [
+
+
+
+{
+    id: "1",
+    title: "Polo Hugo a",
+    description: "",
+    price: "S/ 55.00",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/hugo/Hugo14.jpg",
+      "/images/hugo/Hugo15.jpg",
+      "/images/hugo/Hugo16.jpg",
+
+    ],
+  },
+  {
+    id: "2",
+    title: "Polo Hugo b",
+    description: "",
+    price: "S/ 55.00",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/hugo/Hugo11.webp",
+      "/images/hugo/Hugo12.jpg",
+      "/images/hugo/Hugo13.jpg",
+
+    ],
+  },
+  // prodycto nuevo
+ 
+
+  {
+    id: "3",
+    title: "Polo Hugo c",
+    description: "",
+    price: "S/ 55.00",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/hugo/Hugo1.jpeg",
+      "/images/hugo/Hugo2.jpeg",
+      "/images/hugo/Hugo3.jpeg",
+
+    ],
+  },
+
+  {
+    id: "4",
+    title: "Polo Hugo d",
+    description: "",
+    price: "S/ 55.00",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/hugo/Hugo5.webp",
+      "/images/hugo/Hugo6.webp",
+      "/images/hugo/Hugo7.webp",
+
+    ],
+  },
+
+  {
+    id: "5",
+    title: "Polo Hugo e",
+    description: "",
+    price: "S/ 55.00",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/hugo/Hugo8.webp",
+      "/images/hugo/Hugo9.webp",
+      "/images/hugo/Hugo10.webp",
+
+    ],
+  },
+
+  
+
+  {
+    id: "6",
+    title: "Polo Hugo f",
+    description: "",
+    price: "S/ 55.00",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/hugo/Hugo18.jpeg",
+      "/images/hugo/Hugo17.jpeg",
+      
+
+    ],
+  },
+  
+
+  
+];
+---
+
+<Base title="Polo Hugo ">
+  <section class="py-10">
+    <div class="container grid grid-cols-1 gap-10">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} client:load />
+      ))}
+    </div>
+  </section>
+
+  
+</Base>

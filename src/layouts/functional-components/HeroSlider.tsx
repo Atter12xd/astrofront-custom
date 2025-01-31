@@ -16,9 +16,9 @@ const HeroSlider = ({ products }: { products: Product[] }) => {
           bulletClass: "banner-pagination-bullet",
           bulletActiveClass: "banner-pagination-bullet-active",
         }}
-        autoplay={{ delay: 3000, disableOnInteraction: false }} // Avanza cada 3s
+        autoplay={{ delay: 2000, disableOnInteraction: false }} // Avanza cada 3s
         loop={true} // Hace que el carrusel sea infinito
-        speed={1200} // Suaviza la transición
+        speed={750} // Suaviza la transición
         effect="fade" // Aplicamos un desvanecimiento entre slides
         modules={[Pagination, Autoplay, EffectFade]} // Añadimos el módulo EffectFade
       >
