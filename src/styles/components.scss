@@ -116,6 +116,9 @@
 .image-gallery:hover img {
   transform: scale(1.25);
 }
+html {
+  scroll-behavior: smooth;
+}
 // swiper pagination
 .swiper-pagination {
   @apply mt-9 flex items-center justify-center space-x-2 text-center;

@@ -5,8 +5,8 @@
       "url": "/"
     },
     {
-      "name": "Products",
-      "url": "/products"
+      "name": "Productos",
+      "url": "/#polos"
     },
     {
       "name": "Hombre",
@@ -14,16 +14,12 @@
       "hasChildren": true,
       "children": [
         {
-          "name": "Ver todo",
-          "url": "/products/hombre"
-        },
-        {
           "name": "Polos",
-          "url": "/products/hombre/polos"
+          "url": "/#polos"
         },
         {
           "name": "Pantalones",
-          "url": "/products/hombre/pantalones"
+          "url": "/#pantalones"
         }
       ]
     },
@@ -33,17 +29,12 @@
       "hasChildren": true,
       "children": [
         {
-          "name": "Ver todo",
-          "url": "/products/mujer"
-        },
-       
-        {
           "name": "Polos",
-          "url": "/products/mujer/polos"
+          "url": "/#polos"
         },
         {
           "name": "Pantalones",
-          "url": "/products/mujer/pantalones"
+          "url": "/#pantalones"
         }
       ]
     },

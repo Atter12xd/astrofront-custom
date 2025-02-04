@@ -14,36 +14,36 @@ const heroProducts = [
     id: "1",
     title: "Mira nuestras siguientes ofertas",
     description: "THE NORTH FACE - Calidad y estilo para cualquier aventura",
-    link: "/products/the-north-face",
+    link: "/products/hugo", // Enlace al producto
     featuredImage: { url: "/images/hugo-boxfirenegro.jpeg" },
   },
   {
     id: "2",
     title: "Contáctanos si tienes alguna consulta",
     description: "Ropa cómoda y elegante para cada ocasión",
-    link: "/contact",
+    link: "/products/hugo", // Enlace al producto
     featuredImage: { url: "/images/hugo-boxlogorandom.webp" },
   },
   {
     id: "3",
     title: "Nueva Colección 2024",
     description: "Explora la última moda con nuestra nueva colección",
-    link: "/products/new-collection",
-    featuredImage: { url: "/images/tommy1.jpeg" },
+    link: "/products/hugo", // Enlace al producto
+    featuredImage: { url: "/images/hugo/Hugo7.webp" },
   },
   {
     id: "4",
     title: "¡Descuentos Exclusivos!",
     description: "Aprovecha hasta un 50% de descuento en productos seleccionados",
-    link: "/offers",
-    featuredImage: { url: "/images/tommy2.jpeg" },
+    link: "/products/gregor",
+    featuredImage: { url: "/images/mcgregor/Mcgregor1.jpg" },
   },
   {
     id: "5",
     title: "Accesorios Premium",
     description: "Complementa tu estilo con nuestra línea exclusiva de accesorios",
-    link: "/accessories",
-    featuredImage: { url: "/images/tommy3.jpeg" },
+    link: "/products/champion", // Enlace al producto
+    featuredImage: { url: "/images/champion/Champion1.webp" },
   },
 ];
 
@@ -229,13 +229,23 @@ const featuredProducts = [
     </div>
   </section>
 
-  {/* Sección de Colecciones */}
-  <section class="section">
+  {/* Sección de Polos */}
+  <section id="polos" class="section">
     <div class="container">
       <div class="text-center mb-6 md:mb-14">
         <h2>Polos</h2>
       </div>
-      <CollectionsSlider client:load collections={collectionProducts} />
+      <CollectionsSlider client:load collections={collectionProducts.filter(item => !item.title.includes("Pantalón"))} />
+    </div>
+  </section>
+
+  {/* Sección de Pantalones */}
+  <section id="pantalones" class="section">
+    <div class="container">
+      <div class="text-center mb-6 md:mb-14">
+        <h2>Pantalones</h2>
+      </div>
+      <CollectionsSlider client:load collections={collectionProducts.filter(item => item.title.includes("Pantalón"))} />
     </div>
   </section>
 
