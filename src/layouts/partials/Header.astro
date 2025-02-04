@@ -354,7 +354,7 @@ const isParentActive = (children: any[]) => {
       }
     }
 
-    function toggleSubmenu(e: any) {
+    function toggleSubmenu(e) {
       const button = e.currentTarget;
       const submenu = button.nextElementSibling;
       const arrow = button.querySelector(".submenu-arrow");
@@ -362,6 +362,19 @@ const isParentActive = (children: any[]) => {
       submenu.classList.toggle("hidden");
       arrow.classList.toggle("active");
     }
+
+    // 🔹 **Cierra el menú si el usuario hace clic en Polos o Pantalones**
+    function closeMenuOnClick(event) {
+      const target = event.target;
+      if (target.closest(".nav-dropdown-link")) {
+        toggleSidebar(); // Cierra el menú si es un enlace del menú
+      }
+    }
+
+    // Agregar evento para cerrar el menú al hacer clic en Polos o Pantalones
+    document.querySelectorAll(".nav-dropdown-link").forEach((link) => {
+      link.addEventListener("click", closeMenuOnClick);
+    });
 
     // Event Listeners
     window.addEventListener("scroll", updateNavbarShadow);
