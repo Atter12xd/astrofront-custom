@@ -44,8 +44,9 @@ const heroProducts = [
 const collectionProducts = [
   {
     id: "1",
-    title: "",
-    brand: "TOMMY H", // Marca del producto    
+    title: "Polo Tommy H",
+    brand: "TOMMY H", // Marca del producto
+    category: "hombre",    
     featuredImage: { url: "/images/polo_tom_fre.webp" },
     link: "/products/tommy-h",// Enlace al producto
   },
@@ -55,6 +56,7 @@ const collectionProducts = [
     id: "2",
     title: "",
     brand: "THE NORT FACE", // Marca del producto
+    category: "hombre",  
     featuredImage: { url: "/images/THE_NORT_FACE1.avif" },  
     link: "/products/the-north-face", // Enlace al producto
   },
@@ -64,6 +66,7 @@ const collectionProducts = [
     id: "3",
     title: "",
     brand: "Polo RL", // Marca del producto
+    category: "hombre",  
     featuredImage: { url: "/images/RH1.webp" },
     link: "/products/PoloRl", // Enlace al producto
   },
@@ -71,6 +74,7 @@ const collectionProducts = [
     id: "4",
     title: "",
     brand: "Polo HUGO", // Marca del producto
+    category: "hombre",  
     featuredImage: { url: "/images/hugo/Hugo7.webp" },
     link: "/products/hugo", // Enlace al producto
   },
@@ -79,6 +83,7 @@ const collectionProducts = [
     id: "5",
     title: "",
     brand: "Polo BURBERRY", // Marca del producto
+    category: "hombre",  
     featuredImage: { url: "/images/burberry/burberry1.webp" },
     link: "/products/burberry", // Enlace al producto
   },
@@ -87,6 +92,7 @@ const collectionProducts = [
     id: "6",
     title: "",
     brand: "BOOS x GOAT X LEGEND", // Marca del producto
+    category: "hombre",  
     featuredImage: { url: "/images/boss-goat-white2.webp" },  
     link: "/products/boos", // Enlace al producto
   },
@@ -94,6 +100,7 @@ const collectionProducts = [
     id: "7",
     title: "",
     brand: "Polo ADIDAS", // Marca del producto
+    category: "hombre",  
     featuredImage: { url: "/images/adidas/adidas1.jpg" },  
     link: "/products/adidas", // Enlace al producto
   },
@@ -102,6 +109,7 @@ const collectionProducts = [
     id: "8",
     title: "",
     brand: "Columbia", // Marca del producto
+    category: "hombre",  
     featuredImage: { url: "/images/columbia1.webp" },
     link: "/products/columbia", // Enlace al producto
   },
@@ -110,6 +118,7 @@ const collectionProducts = [
     id: "9",
     title: "",
     brand: "SUPREME", // Marca del producto
+    category: "hombre",  
     featuredImage: { url: "/images/supreme3.webp" },  
     link: "/products/supreme", // Enlace al producto
   },
@@ -118,6 +127,7 @@ const collectionProducts = [
     id: "10",
     title: "",
     brand: "LACOSTE", // Marca del producto
+    category: "hombre",  
     featuredImage: { url: "/images/lacoste1.jpeg" },  
     link: "/products/LaCoste", // Enlace al producto
   },
@@ -126,6 +136,7 @@ const collectionProducts = [
     id: "11",
     title: "",
     brand: "CHAMPION", // Marca del producto
+    category: "hombre",  
     featuredImage: { url: "/images/champion/Champion1.webp" },  
     link: "/products/champion", // Enlace al producto
   },
@@ -183,10 +194,55 @@ const collectionProducts = [
     brand: "Adidas",
     featuredImage: { url: "/images/P-adidas/p-adidas1.jpg" },
     link: "/products/p_adidas",
-  }
-  
+  },
 
-  
+  {
+  id: "19",
+  title: "Polo Mujer",
+  brand: "LaCoste",
+  category: "mujer",
+  featuredImage: { url: "/images/lacostemujer/lacoste2.jpg  " },
+  link: "/products/lacostemujer",
+},
+
+{
+  id: "20",
+  title: "Polo Mujer",
+  brand: "Guess",
+  category: "mujer",
+  featuredImage: { url: "/images/guessmujer/guess8.jpg  " },
+  link: "/products/guessmujer ",
+},
+
+{
+  id: "21",
+  title: "Polo Mujer",
+  brand: "Champion",
+  category: "mujer",
+  featuredImage: { url: "/images/championmujer/champion1.jpg  " },
+  link: "/products/championmujer ",
+},
+
+{
+  id: "22",
+  title: "Polo Mujer",
+  brand: "Carolina Herrera",
+  category: "mujer",
+  featuredImage: { url: "/images/carolina/carolina1.jpg  " },
+  link: "/products/carolina ",
+},
+
+{
+  id: "23",
+  title: "Polo Mujer",
+  brand: "Calvin Klein",
+  category: "mujer",
+  featuredImage: { url: "/images/calvinmujer/calvin1.jpg  " },
+  link: "/products/calvinmujer ",
+},
+
+
+
  
  
 ];
@@ -227,21 +283,31 @@ const featuredProducts = [
   <section id="polos" class="section">
     <div class="container">
       <div class="text-center mb-6 md:mb-14">
-        <h2>Polos</h2>
+        <h2>Polos para Hombres </h2>
       </div>
-      <CollectionsSlider client:load collections={collectionProducts.filter(item => !item.title.includes("Pantalón"))} />
-    </div>
+      <CollectionsSlider client:load collections={collectionProducts.filter(item => item.category === "hombre")} />
+      </div>
   </section>
 
   {/* Sección de Pantalones */}
   <section id="pantalones" class="section">
     <div class="container">
       <div class="text-center mb-6 md:mb-14">
-        <h2>Pantalones</h2>
+        <h2>Pantalones para Hombres </h2>
       </div>
       <CollectionsSlider client:load collections={collectionProducts.filter(item => item.title.includes("Pantalón"))} />
     </div>
   </section>
+
+  {/* Sección de Polos para Mujeres */}
+<section id="polos-mujer" class="section">
+  <div class="container">
+    <div class="text-center mb-6 md:mb-14">
+      <h2>Polos para Mujeres</h2>
+    </div>
+    <CollectionsSlider client:load collections={collectionProducts.filter(item => item.category === "mujer")} />
+    </div>
+</section>
 
   {/* Sección de Productos Destacados */}
   <section>

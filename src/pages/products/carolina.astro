@@ -1,0 +1,57 @@
+---
+import Base from "@/layouts/Base.astro";
+import CallToAction from "@/partials/CallToAction.astro";
+import ProductCard from "../../components/ProductCard"; // Asegúrate de que esta ruta sea correcta
+
+// Simulando los datos dinámicos de los productos de "THE NORTH FACE"
+const products = [
+
+{
+    id: "1",
+    title: "Polo Carolina Herrera aM",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+    "/images/carolina/carolina1.jpg",
+    "/images/carolina/carolina2.jpg",
+    "/images/carolina/carolina3.jpg",
+    "/images/carolina/carolina4.jpg",
+    
+    ],
+  },
+
+  {
+    id: "2",
+    title: "Polo Carolina Herrera bM",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/carolina/carolina5.jpg",
+      "/images/carolina/carolina6.jpg",
+      "/images/carolina/carolina7.jpg",
+     
+
+      
+    ],
+  },
+  // prodycto nuevo
+  
+ 
+];
+---
+
+<Base title="Polo carolina herrera para mujer ">
+  <section class="py-10">
+    <div class="container grid grid-cols-1 gap-10">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} client:load />
+      ))}
+    </div>
+  </section>
+
+  
+</Base>

@@ -1,0 +1,94 @@
+---
+import Base from "@/layouts/Base.astro";
+import CallToAction from "@/partials/CallToAction.astro";
+import ProductCard from "../../components/ProductCard"; // Asegúrate de que esta ruta sea correcta
+
+// Simulando los datos dinámicos de los productos de "THE NORTH FACE"
+const products = [
+
+{
+    id: "1",
+    title: "Polo Guess bM",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+    "/images/guessmujer/guess7.jpg",
+    "/images/guessmujer/guess8.jpg",
+    "/images/guessmujer/guess9.jpg",
+    "/images/guessmujer/guess10.jpg",
+    "/images/guessmujer/guess11.jpg",
+    ],
+  },
+
+  {
+    id: "2",
+    title: "Polo Guess aM",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/guessmujer/guess1.jpg",
+      "/images/guessmujer/guess2.jpg",
+      "/images/guessmujer/guess3.jpg",
+      "/images/guessmujer/guess4.jpg",
+      "/images/guessmujer/guess5.jpg",
+      "/images/guessmujer/guess6.jpg",
+
+      
+    ],
+  },
+  // prodycto nuevo
+  
+  {
+    id: "3",
+    title: "Polo Guess cM",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+    "/images/guessmujer/guess12.jpg",
+    "/images/guessmujer/guess13.jpg",
+    "/images/guessmujer/guess14.jpg",
+    "/images/guessmujer/guess15.jpg",
+
+      
+    ],
+  },
+
+  {
+    id: "4",
+    title: "Polo Guess dM",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/guessmujer/guess16.jpg",
+      "/images/guessmujer/guess17.jpg",
+      "/images/guessmujer/guess18.jpg",
+      "/images/guessmujer/guess19.jpg",
+      "/images/guessmujer/guess20.jpg",
+      
+
+      
+    ],
+  },
+ 
+];
+---
+
+<Base title="Polo guess para mujer ">
+  <section class="py-10">
+    <div class="container grid grid-cols-1 gap-10">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} client:load />
+      ))}
+    </div>
+  </section>
+
+  
+</Base>

@@ -1,0 +1,84 @@
+---
+import Base from "@/layouts/Base.astro";
+import CallToAction from "@/partials/CallToAction.astro";
+import ProductCard from "../../components/ProductCard"; // Asegúrate de que esta ruta sea correcta
+
+// Simulando los datos dinámicos de los productos de "THE NORTH FACE"
+const products = [
+  {
+    id: "1",
+    title: "Polo LaCoste aM",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/lacostemujer/lacoste1.jpg",
+      "/images/lacostemujer/lacoste2.jpg",
+      "/images/lacostemujer/lacoste3.jpg",
+
+      
+    ],
+  },
+  // prodycto nuevo
+  {
+    id: "2",
+    title: "Polo LaCoste bM",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/lacostemujer/lacoste4.jpg",
+      "/images/lacostemujer/lacoste5.jpg",
+      "/images/lacostemujer/lacoste6.jpg",
+
+      
+    ],
+  },
+  {
+    id: "3",
+    title: "Polo LaCoste cM",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/lacostemujer/lacoste7.jpg",
+      "/images/lacostemujer/lacoste8.jpg",
+      "/images/lacostemujer/lacoste9.jpg",
+
+      
+    ],
+  },
+
+  {
+    id: "4",
+    title: "Polo LaCoste dM",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/lacostemujer/lacoste10.jpg",
+      "/images/lacostemujer/lacoste11.jpg",
+      
+
+      
+    ],
+  },
+ 
+];
+---
+
+<Base title="Polo LaCoste para mujer ">
+  <section class="py-10">
+    <div class="container grid grid-cols-1 gap-10">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} client:load />
+      ))}
+    </div>
+  </section>
+
+  
+</Base>

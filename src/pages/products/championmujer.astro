@@ -1,0 +1,86 @@
+---
+import Base from "@/layouts/Base.astro";
+import CallToAction from "@/partials/CallToAction.astro";
+import ProductCard from "../../components/ProductCard"; // Asegúrate de que esta ruta sea correcta
+
+// Simulando los datos dinámicos de los productos de "THE NORTH FACE"
+const products = [
+
+{
+    id: "1",
+    title: "Polo Champion aM",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+    "/images/championmujer/champion1.jpg",
+    "/images/championmujer/champion2.jpg",
+    "/images/championmujer/champion3.jpg",
+    "/images/championmujer/champion4.jpg",
+    
+    ],
+  },
+
+  {
+    id: "2",
+    title: "Polo Champion aM",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/championmujer/champion5.jpg",
+      "/images/championmujer/champion6.jpg",
+      "/images/championmujer/champion7.jpg",
+     
+
+      
+    ],
+  },
+  // prodycto nuevo
+  
+  {
+    id: "3",
+    title: "Polo Champion cM",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+    "/images/championmujer/champion8.jpg",
+    "/images/championmujer/champion9.jpg",
+    "/images/championmujer/champion10.jpg",
+      
+    ],
+  },
+
+  {
+    id: "4",
+    title: "Polo Champion dM",
+    description: "",
+    price: "S/ 50.90",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#FF0000", "#000000", "#00FF00"], // Rojo, Negro, Verde
+    images: [
+      "/images/championmujer/champion11.jpg",
+      "/images/championmujer/champion12.jpg",
+      "/images/championmujer/champion13.jpg",
+      
+    ],
+  },
+ 
+];
+---
+
+<Base title="Polo champion para mujer ">
+  <section class="py-10">
+    <div class="container grid grid-cols-1 gap-10">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} client:load />
+      ))}
+    </div>
+  </section>
+
+  
+</Base>
